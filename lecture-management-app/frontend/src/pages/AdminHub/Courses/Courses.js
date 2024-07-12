@@ -3,7 +3,7 @@ import { AddCourseForm } from "../../../forms/Courses/AddCourseForm";
 import { CourseTable } from "../../../components/AdminHub/CourseTable";
 
 export const Courses = () =>{
-    return(
+    return (
         <div>
             <div>
             <h2 class="text-xl font-medium text-black">Course</h2>
