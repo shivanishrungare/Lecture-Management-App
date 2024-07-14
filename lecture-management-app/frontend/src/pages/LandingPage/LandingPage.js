@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navbar } from "../../components/NavigationBar/Navbar"
-import  landingPageImg from "../../assets/landingPageImg.png"
+import  landingPageImg from "../../assets/image01.png"
 import './LandingPage.css'
 
 export const LandingPage = () => {

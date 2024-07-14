@@ -1,0 +1,32 @@
+.success-modal-main {
+    width: 600px;
+}
+
+.success-modal-content {
+    background-color: #DF4807;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.modal-title {
+    color: #ffffff;
+}
+
+.success-modal-message {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-popup-button {
+    background-color: #DF4807;
+    padding: 8px 24px;
+    border: 1px solid #DF4807;
+    border-radius: 20px;
+}

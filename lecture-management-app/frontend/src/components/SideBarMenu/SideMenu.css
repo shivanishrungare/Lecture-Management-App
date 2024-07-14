@@ -1,8 +1,8 @@
 :root {
     --icon-width: 20px;
     --icon-height: 20px;
-    --icon-padding: 10px;
-    --icon-margin-bottom: 10px;
+    --icon-padding: 5px;
+    --icon-margin-bottom: 20px;
 }
 
 .sidemenu {
@@ -13,9 +13,9 @@
     justify-content: center;
     position: fixed;
     z-index: 1;
-    top: 63px;
+    top: 53px;
     left: 0;
-    padding-left: 10px;
+    padding: 5px;
     background-color: #ffffff;
     overflow-x: hidden;
     border: 0.5px solid #d9d9d9;

@@ -2,5 +2,5 @@
     font-family: "Inter";
     src: local("Inter"),
      url("./assets/fonts/Inter.ttf") format("truetype");
-    font-weight: 600;
+     font-weight: 400px;
    }

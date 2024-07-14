@@ -1,0 +1,40 @@
+.status-side-menu {
+    height: 100%;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: fixed;
+    z-index: 1;
+    top: 55px;
+    left: 75px;
+    padding: 15px 25px;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    border-right: 0.5px solid #d9d9d9;
+}
+
+.side-menu-content {
+    position: relative;
+    z-index: 1;
+}
+.status-title {
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 16px;
+}
+
+.add-button {
+    background-color: #DF4807 ;
+    color: #ffffff;
+    border-color: #DF4807;
+    display: flex;
+    align-items: center;
+    padding: 4px 10px 4px 5px;
+    border-radius: 20px;
+}
+
+.add-button img {
+    margin-right: 4px;
+}

@@ -1,0 +1,156 @@
+.user-form-container {
+    width: 900px;
+    height: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #dfd1c7;
+    position: relative;
+}
+
+.user-form-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-form-row {
+    width: 450px;
+    height: 400px;
+    border: 1px solid #fae4d7;
+    box-shadow: 2px 2px #f0dfd6;
+}
+
+.user-form-group {
+    margin: 45px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.user-form-title {
+    margin-bottom: 20px;
+}
+
+.user-form-row-inputs {
+    display: flex;
+    flex-direction: row;
+    margin: 2px;
+}
+
+.input-field {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 4px;
+}
+
+.login-input-field {
+    width: 380px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin: 10px;
+}
+
+
+.user-form-group button[type='signup']{
+    background-color: #DF4807;
+    color: #ffffff;
+    border: 1px solid #DF4807;
+    padding: 10px 24px;
+    border-radius: 20px;
+    width: 400px;
+    margin-top: 10px;
+}
+
+.user-form-group button[type='login'] {
+    background-color: #DF4807;
+    color: #ffffff;
+    border: 1px solid #DF4807;
+    padding: 10px 24px;
+    border-radius: 20px;
+    width: 380px;
+    margin-top: 10px;
+}
+
+.login .signup option {
+    font-size: 18px;
+}
+
+.form-group-check {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 380px;
+}
+.form-checkbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.forgetPwd {
+    display: flex;
+    flex-direction: row;
+}
+
+.register-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.register-link {
+    margin-left: 4px;
+    color: #DF4807;
+}
+
+.user-form-title {
+    font-size: 25px;
+    color: #DF4807;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+}
+
+.user-form-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.user-form-images img {
+    margin-top: 20px;
+}
+
+.forgetPwd {
+    color:#DF4807;
+}
+
+.user-form-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px; 
+    cursor: pointer; 
+    border-style: hidden;
+    background-color: #ffffff;
+}
+
+
+.user-form-close-button:hover {
+    border-style: hidden;
+    border: 1px solid #d9d9d9d9;
+    transition: color 0.3s ease;
+}
+  
+  
