@@ -7,9 +7,9 @@ export const AdminSideMenu = () => {
         <div className='admin-side-menu'>
             <p className='font-face adminHub'>Admin Hub</p>
         <div className='side-menu-links'>
-            <a className='font-face'>Events and Holidays</a>
-            <a className='font-face'>Courses and modules</a>
-            <a className='font-face'>User registrations</a>
+            <a className='font-face admin-links'>Events and Holidays</a>
+            <a className='font-face admin-links'>Courses and modules</a>
+            <a className='font-face admin-links'>User registrations</a>
         </div>
         </div>      
     </div>

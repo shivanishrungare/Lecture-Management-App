@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Form.css';
 
 export const ModulePlanForm = ({ onRequestClose }) => {
   return (
@@ -72,7 +71,7 @@ export const ModulePlanForm = ({ onRequestClose }) => {
         <div className='row'>
           <div className='form-group'>
             <label className='font-face'>Message for Professors</label>
-            <input type='text' className='fields' defaultValue='Write message here' />
+            <input type='text' className='fields' placeholder='Write message here' />
           </div>
         </div>
         <div className='row'>

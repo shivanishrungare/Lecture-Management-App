@@ -7,7 +7,7 @@
     justify-content: flex-start;
     position: fixed;
     z-index: 1;
-    top: 64px;
+    top: 54px;
     left: 75px;
     padding: 15px 25px;
     background-color: #ffffff;
@@ -29,9 +29,15 @@ a:focus {
     flex-direction: row;
 }
 
+.admin-links {
+    font-size: 15px;
+    font-weight: 500;
+}
+
 .adminHub {
-    font-size: 20px;
-    margin-top: 0px;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 10px;
 }
 
 .side-menu-links a{
