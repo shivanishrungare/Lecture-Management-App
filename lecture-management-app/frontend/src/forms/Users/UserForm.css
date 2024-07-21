@@ -70,7 +70,7 @@
     margin-top: 10px;
 }
 
-.user-form-group button[type='login'] {
+.user-form-group button[type='submit'] {
     background-color: #DF4807;
     color: #ffffff;
     border: 1px solid #DF4807;

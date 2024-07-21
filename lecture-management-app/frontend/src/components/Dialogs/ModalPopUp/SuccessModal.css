@@ -13,6 +13,7 @@
 
 .modal-title {
     color: #ffffff;
+    font-size: 25px;
 }
 
 .success-modal-message {
@@ -29,4 +30,5 @@
     padding: 8px 24px;
     border: 1px solid #DF4807;
     border-radius: 20px;
+    color: #ffffff;
 }

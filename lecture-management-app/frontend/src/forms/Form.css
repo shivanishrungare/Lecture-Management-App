@@ -40,7 +40,7 @@
     border-radius: 4px;
     box-sizing: border-box;
   }
-  
+
   .form-container button {
     padding: 10px 24px;
     border: none;
@@ -94,4 +94,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     width: auto;
+  }
+
+  .multiple-select{
+    padding: '8px 5px';
   }

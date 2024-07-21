@@ -30,7 +30,7 @@ const lecturePlanSchema = new mongoose.Schema({
             message: 'endTime must be after startTime'
         }
     },
-    professors: [{
+    Professors: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true

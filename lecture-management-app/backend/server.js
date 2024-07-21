@@ -4,16 +4,17 @@ const userRoutes = require('./routes/userRoutes')
 const dotenv = require('dotenv');
 const cors = require('cors');
 const express = require('express');
+const bodyParser= require('body-parser')
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(bodyParser.json());
 
 app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
-
 
 const mongodb_uri = process.env.MONGODB_URI;
 mongoose

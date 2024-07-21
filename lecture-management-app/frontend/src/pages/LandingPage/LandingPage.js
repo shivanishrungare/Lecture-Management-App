@@ -1,12 +1,12 @@
 import React from 'react'
-import { Navbar } from "../../components/NavigationBar/Navbar"
+import { Header } from '../../components/NavigationBar/Header'
 import  landingPageImg from "../../assets/image01.png"
 import './LandingPage.css'
 
 export const LandingPage = () => {
   return (
     <div className='landing-page'>
-      <Navbar/>
+      <Header/>
       <div className='landing-page-elements'>
         <div className='landing-page-content'>
           <h1 className='font-face'>Collaborate, plan and manage <br/>

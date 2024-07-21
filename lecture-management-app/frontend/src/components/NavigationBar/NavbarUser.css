@@ -23,4 +23,6 @@
 .navbar-user-buttons button {
     border-style: hidden;
     background-color: white;
+    cursor: pointer;
+    margin-bottom: 5px;
 }
