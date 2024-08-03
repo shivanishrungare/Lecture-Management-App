@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -9,41 +8,8 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
 
-const headCells = [
-  {
-    id: 'studyProgram',
-    numeric: false,
-    disablePadding: true,
-    label: 'Study Program',
-  },
-  {
-    id: 'moduleName',
-    numeric: false,
-    disablePadding: false,
-    label: 'Module Name',
-  },
-  {
-    id: 'creditPoints',
-    numeric: true,
-    disablePadding: false,
-    label: 'Credit Points',
-  },
-  {
-    id: 'language',
-    numeric: false,
-    disablePadding: false,
-    label: 'Language',
-  },
-  {
-    id: 'moduleDetails',
-    numeric: false,
-    disablePadding: false,
-    label: 'Module Details',
-  },
-];
-
-export default function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+export const EnhancedTableHead = (props) => {
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -58,7 +24,7 @@ export default function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all modules',
+              'aria-label': 'select all items',
             }}
           />
         </TableCell>
@@ -86,7 +52,7 @@ export default function EnhancedTableHead(props) {
       </TableRow>
     </TableHead>
   );
-}
+};
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
@@ -95,4 +61,5 @@ EnhancedTableHead.propTypes = {
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
+  headCells: PropTypes.array.isRequired,
 };

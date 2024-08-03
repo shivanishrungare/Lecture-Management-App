@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
     startDate: {
@@ -11,17 +11,17 @@ const eventSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function(value) {
-                return this.startDate < value;
+                return this.startDate <= value;
             },
             message: 'endDate must be after startDate'
         }
     },
     startTime: {
-        type: Date,
+        type: String,
         required: true
     },
     endTime: {
-        type: Date,
+        type: String,
         required: true,
         validate: {
             validator: function(value) {
@@ -37,12 +37,12 @@ const eventSchema = new mongoose.Schema({
     },
     eventType:{
         type: String,
-        enum: ['Public Holiday', 'Convocation', 'Summer Break', 'Campus Event', 'Other'],
+        enum: ['Public Holiday', 'Convocation', 'Summer Break', 'Campus Event', 'Christmas Break', 'Other'],
         required: true,
     }
 },{
     timestamps: true,
 })
 
-const Events = mongoose.model('Events', eventSchema);
-module.exports = Events;
+const Event = mongoose.model('Event', eventSchema);
+module.exports = Event;

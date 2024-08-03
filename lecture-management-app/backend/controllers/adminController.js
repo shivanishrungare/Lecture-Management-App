@@ -1,5 +1,5 @@
 const Course= require('../models/courseSchema');
-
+const Event= require('../models/eventSchema');
 
 exports.getAllCourses = async (req, res) => {
     try {
@@ -64,5 +64,25 @@ exports.deleteCourse = async (req, res) => {
     } catch (error) {
         console.error('Error deleting course:', error);
         res.status(400).json({ message: 'Server error' });
+    }
+}
+
+exports.addEvent = async (req, res) => {
+    try {
+      const { startDate, endDate, startTime, endTime, eventDetails, eventType } = req.body;
+      const newEvent = new Event({ startDate, endDate, startTime, endTime, eventDetails, eventType });
+      await newEvent.save();
+      res.status(200).json(newEvent);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
+  exports.getAllEvents = async (req, res) => {
+    try {
+        const events = await Event.find();
+        res.json(events);
+    } catch (error) {
+        res.status(400).json({ message : error.message})
     }
 }

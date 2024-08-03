@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import { EventsTable } from "../../../tables/EventsTable";
-import { ModalForm } from "../../../forms/ModalForm";
-import { AddEventsForm } from '../../../forms/EventsForm/AddEventsForm';
+import { CoursesTable } from "../../../tables/CoursesTable";
+import { ModalForm } from "../../../forms/ModalForm"; 
+import { AddCourseForm } from '../../../forms/CourseForm/AddCourseForm'
 import add from '../../../assets/icons/add.svg';
 import '../AdminHub.css';
 
-export const AdminEvents = () => {
+export const AdminCourses = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [formType, setFormType] = useState('');
 
     const openModal = (type) => {
-      setFormType(type);
-      setModalIsOpen(true);
+        setFormType(type);
+        setModalIsOpen(true);
     };
 
     const closeModal = () => {
-      setModalIsOpen(false);
-      setFormType('');
+        setModalIsOpen(false);
+        setFormType('');
     };
 
     return (
@@ -24,18 +24,18 @@ export const AdminEvents = () => {
             <div className="admin-page-container">
                 <div className="admin-page-content">
                     <div className="admin-page-actions">
-                        <h1 className="font-face page-subtitle">Events and Public Holidays</h1>
-                        <button className='add-button' onClick={() => openModal('events')}>
+                        <h1 className="font-face page-subtitle">Courses and modules</h1>
+                        <button className='add-button' onClick={() => openModal('courses')}>
                             <img src={add} alt='add' width='25px' height='25px'/>
-                            <span className='font-face'>New Event</span>
+                            <span className='font-face'>New Course</span>
                         </button>
                     </div>
                     <div className="admin-table">
-                        <EventsTable/>
+                        <CoursesTable/>
                     </div>
                 </div>
                 <ModalForm isOpen={modalIsOpen} onRequestClose={closeModal}>
-                    {formType === 'events' && <AddEventsForm onRequestClose={closeModal} />}
+                    {formType === 'courses' && <AddCourseForm onRequestClose={closeModal} />}
                 </ModalForm>
             </div>
         </div>
