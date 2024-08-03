@@ -72,18 +72,12 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Incorrect password' });
     }
     const role = existingUser.role;
-    const userData= {
-      id: existingUser._id,
-      firstName: existingUser.firstName, 
-      lastName: existingUser.lastName, 
-      role: existingUser.role, 
-      title: existingUser.title, 
-      email: existingUser.email, 
-    };
+
+    const initials = `${existingUser.firstName.charAt(0)}${existingUser.lastName.charAt(0)}`
 
     const token = generateToken(existingUser);
     
-    res.status(200).json({ token, role, userData: JSON.stringify(userData), message: 'Login successful' });
+    res.status(200).json({ token, role, initials, message: 'Login successful' });
   } catch (error) {
     console.error('Error logging user:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -128,11 +122,29 @@ exports.deleteUser = async (req, res) => {
 
 exports.pendingUsers = async (req, res) => {
     try {
-       const users = await User.find({ status: 'pending' });
+       const users = await User.find({ status: 'pending' }).select('firstName lastName role userName email status');
        res.json({ users }); 
     } catch (error) {
        res.status(400).json({ message : error.message})
     }
+}
+
+exports.approvedUsers = async (req, res) => {
+  try {
+     const users = await User.find({ status: 'approved' }).select('firstName lastName role userName email status');
+     res.json({ users }); 
+  } catch (error) {
+     res.status(400).json({ message : error.message})
+  }
+}
+
+exports.rejectedUsers = async (req, res) => {
+  try {
+     const users = await User.find({ status: 'rejected' }).select('firstName lastName role userName email status');
+     res.json({ users }); 
+  } catch (error) {
+     res.status(400).json({ message : error.message})
+  }
 }
 
 exports.approveUserStatus = async (req, res) => {

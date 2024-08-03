@@ -1,9 +1,9 @@
 import React from 'react'
 import logo from '../../assets/logo4.png'
 import { useState } from 'react';
-import { ModalForm } from '../../forms'
-import { LoginForm } from '../../forms/Users/LoginForm'
-import { SignupForm } from '../../forms/Users/SignupForm'
+import { ModalForm } from '../../forms/ModalForm';
+import { LoginForm } from '../../forms/UserForm/LoginForm';
+import { SignupForm } from '../../forms/UserForm/SignupForm';
 import './Navbar.css'
 
 export const Navbar = () => {

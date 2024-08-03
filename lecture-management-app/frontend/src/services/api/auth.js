@@ -6,42 +6,41 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState(null); 
-  // const [user, setUser] = useState(null); 
+  const [initials, setInitials] = useState(''); 
  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userRole = localStorage.getItem('role'); 
-    // const userData = localStorage.getItem('user');
-    // localStorage.setItem('user', JSON.stringify(userData));
-    if (token && userRole) {
+    const userInitials= localStorage.getItem('initials');
+    if (token && userRole && userInitials) {
       setIsLoggedIn(true);
       setRole(userRole);
-      // setUser(userData);
+      setInitials(userInitials);
     }
   }, []);
 
-  const login = (token, userRole) => {
+  const login = (token, userRole, userInitials) => {
     localStorage.setItem('token', token);
     localStorage.setItem('role', userRole);
-    // localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('initials', userInitials);
     setIsLoggedIn(true);
     setRole(userRole);
-    // setUser(userData);
+    setInitials(userInitials);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
-    // localStorage.removeItem('user');
+    localStorage.removeItem('initials');
     setIsLoggedIn(false);
     setRole(null);
-    // setUser(null);
-    // setUser(null);
+    setInitials('');
   };
 
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, role, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, role, initials, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

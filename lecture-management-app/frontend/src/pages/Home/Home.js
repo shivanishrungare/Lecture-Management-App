@@ -1,12 +1,16 @@
 import React from 'react'
-import { SideMenu } from '../../components/SideBarMenu/SideMenu'
+import { SideBar } from '../../components/SideBarMenu/SideBar'
 import { NavbarUser } from '../../components/NavigationBar/NavbarUser'
+import { Calendar } from '../../components/Calendar/Calendar'
+import { HomeSideMenu } from '../../components/SideMenu/HomeSideMenu'
 
 export const Home = () => {
   return (
     <div>
         <NavbarUser/>
-        <SideMenu/>
+        <SideBar/>
+        <HomeSideMenu/>
+        <Calendar/>
     </div>
   )
 }

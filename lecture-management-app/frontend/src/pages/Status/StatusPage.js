@@ -1,13 +1,13 @@
 import React from 'react'
 import { NavbarUser } from '../../components/NavigationBar/NavbarUser'
-import { SideMenu } from '../../components/SideBarMenu/SideMenu'
-import { StatusSideMenu } from './StatusSideMenu'
+import { SideBar } from '../../components/SideBarMenu/SideBar'
+import { StatusSideMenu } from '../../components/SideMenu/StatusSideMenu'
 
 export const StatusPage = () => {
   return (
     <div>
       <NavbarUser/>
-      <SideMenu/>
+      <SideBar/>
       <StatusSideMenu/>
     </div>
   )

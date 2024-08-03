@@ -10,6 +10,8 @@ app.use(express.json());
 router.get('/', userController.getAllUsers);
 router.get('/id/:id', userController.getUserById);
 router.get('/pendingUsers', userController.pendingUsers);
+router.get('/approvedUsers', userController.approvedUsers);
+router.get('/rejectedUsers', userController.rejectedUsers);
 
 router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser)

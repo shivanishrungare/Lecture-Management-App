@@ -1,9 +1,9 @@
 import React from 'react'
-import './StatusSideMenu.css'
 import add from '../../assets/icons/add.svg'
 import { ModalForm } from '../../forms/ModalForm'
 import { ModulePlanForm } from '../../forms';
 import { useState } from 'react';
+import './SideMenu.css';
 
 export const StatusSideMenu = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -22,8 +22,8 @@ export const StatusSideMenu = () => {
 
   return (
     <div>
-      <div className='status-side-menu'>
-            <p className='font-face status-title'>Status Board</p>
+      <div className='side-menu-container'>
+            <p className='font-face page-title'>Status Board</p>
         <div className='side-menu-content'>
         <button className='add-button' onClick={() => openModal('modulePlan')}>
             <img src={add} alt='add' width='25px' height='25px'/>

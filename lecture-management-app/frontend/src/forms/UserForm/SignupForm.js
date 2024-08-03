@@ -4,8 +4,8 @@ import logoImg from '../../assets/logoImg.png';
 import close from '../../assets/icons/close.svg';
 import axios from 'axios';
 import './UserForm.css';
-import { ModalPopUp } from '../../utils/ModalPopUp/ModalPopUp';
-import { SignUpSuccess } from '../../utils/ModalPopUp/SignUpSuccess';
+import { ModalPopUp } from '../../components/Dialogs/ModalPopUp/ModalPopUp';
+import { SignUpSuccess } from '../../components/Dialogs/ModalPopUp/SignUpSuccess';
 
 export const SignupForm = ({ onRequestClose, switchToLogin }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -69,7 +69,7 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
         role: userData.role,
         title: userData.title,
         email: userData.email,
-        userName: userData.userName,  // Ensure this matches server-side field name
+        userName: userData.userName, 
         password: userData.password,
       }, {
         headers: { 'Content-Type': 'application/json' }
@@ -77,13 +77,9 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
 
       const { token } = response.data;
 
-      // Store the token (you can use localStorage or cookies as per your security requirements)
       localStorage.setItem('token', token);
-
-      // Open the success modal
       openModal('SignUpSuccess');
 
-      // Clear form data
       setUserData({
         firstName: '',
         lastName: '',

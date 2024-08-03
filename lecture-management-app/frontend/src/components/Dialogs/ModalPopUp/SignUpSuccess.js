@@ -1,5 +1,5 @@
 import React from 'react'
-import success from '../../assets/icons/success.svg'
+import success from '../../../assets/icons/success.svg'
 import './SuccessModal.css'
 
 

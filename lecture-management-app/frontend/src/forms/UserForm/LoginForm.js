@@ -34,8 +34,8 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
           headers: { 'Content-Type': 'application/json' },
         });
         console.log(response.data);
-        const { token, role} = response.data;
-        login(token, role);
+        const { token, role, initials } = response.data;
+        login(token, role, initials);
         navigate('/home');
       } catch (err) {
         if (!err?.response) {
@@ -68,7 +68,7 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
                   className='font-face login-input-field'
                   name='userName'
                   autoComplete='off'
-                  value={formData.userName}
+                  value={ formData.userName }
                   onChange={handleChange}
                   placeholder='Enter username'
                   required
@@ -78,8 +78,8 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
                   className='font-face login-input-field'
                   name='password'
                   autoComplete='off'
-                  value={formData.password}
-                  onChange={handleChange}
+                  value={ formData.password }
+                  onChange={ handleChange }
                   placeholder='Enter password'
                   required
                 />

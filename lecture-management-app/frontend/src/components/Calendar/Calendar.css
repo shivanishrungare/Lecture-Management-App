@@ -1,0 +1,49 @@
+.calendar-main{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.calendar-container{
+    width: 80%;
+    margin-left: 300px;
+    margin-top: 48px;
+    border: 1px solid #e9ded9;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1)
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+    background-color: #DF4807;
+    border-color: #DF4807;
+}
+
+.fc .fc-toolbar-title {
+    color: #DF4807;
+}
+
+.fc .fc-col-header-cell-cushion {
+    color: #DF4807;
+}
+
+.fc .fc-button-primary {
+    background-color: #ffffff;
+    border-color: #DF4807;
+    color: #DF4807;
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: #DF4807;
+}
+
+.fc .fc-button-group button{
+    background-color: #ffffff;
+    border-color: #DF4807;
+    color: #DF4807;
+}
+
+.fc .fc-button-primary:hover{
+    background-color: #DF4807;
+    border-color: #DF4807;
+    color: #ffffff;
+}

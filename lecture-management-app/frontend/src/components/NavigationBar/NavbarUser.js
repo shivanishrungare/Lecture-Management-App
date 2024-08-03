@@ -5,16 +5,15 @@ import './NavbarUser.css'
 import { useContext } from 'react'
 import { AuthContext } from '../../services/api/auth'
 import { useNavigate } from 'react-router-dom'
-import {NameInitialsAvatar} from 'react-name-initials-avatar';
 
 
 export const NavbarUser = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout, initials } = useContext(AuthContext);
+  console.log('User initials:', initials);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     try {
-      console.log('Logout button clicked');
       logout();
       navigate('/')
     } catch (error) {
@@ -29,8 +28,12 @@ export const NavbarUser = () => {
         <img src={logo} width='auto' height='45px' alt='logo'/>
         <div className='navbar-user-buttons'>
           <button><img src={notification} alt='notification' width='25px' height='25px'/></button>
-          <button onClick={handleLogout}><NameInitialsAvatar name="S S" size='30px' borderWidth='1px' textSize='14px' textWeight="300"
-          textColor='white' bgColor='#DF4807' borderColor='#DF4807'/></button>
+          {initials ? (
+          <button className='profile' onClick={handleLogout}>
+          SS
+          </button>) : (
+            <button className='profile' onClick={handleLogout}>Logout</button>
+          )}
         </div>
       </nav>
     </header>

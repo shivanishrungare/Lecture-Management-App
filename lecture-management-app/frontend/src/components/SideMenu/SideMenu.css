@@ -1,0 +1,72 @@
+.side-menu-container {
+    height: 100%;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: fixed;
+    z-index: 1;
+    top: 54px;
+    left: 75px;
+    padding: 16px 25px;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    border-right: 0.5px solid #d9d9d9;
+}
+.side-menu-links{
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-link-courses,
+.admin-link-events,
+.admin-link-users {
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #666363;
+    cursor: pointer;
+}
+
+.admin-link-courses:focus,
+.admin-link-events:focus,
+.admin-link-users:focus,
+.admin-link-courses.active,
+.admin-link-events.active,
+.admin-link-users.active {
+  color: #DF4807;
+  text-decoration: none;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #DF4807;
+}
+
+.side-menu-links a{
+    margin-bottom: 16px;
+}
+
+.add-button {
+    background-color: #DF4807 ;
+    color: #ffffff;
+    border-color: #DF4807;
+    display: flex;
+    align-items: center;
+    padding: 4px 10px 4px 5px;
+    border-radius: 20px;
+}
+
+.add-button img {
+    margin-right: 4px;
+}
+
+.side-menu-content {
+    position: relative;
+    z-index: 1;
+}
+
