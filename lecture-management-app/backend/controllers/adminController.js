@@ -23,6 +23,9 @@ exports.getCourseById = async (req, res) => {
 exports.addCourse = async (req, res) => {
     try {
       const { studyProgram, moduleName, creditPoints, language, moduleDetails } = req.body;
+      if (!studyProgram || !moduleName || !creditPoints || !language || !moduleDetails) {
+        return res.status(400).json({ error: 'All fields are required' });
+      }
       const newCourse = new Course({studyProgram, moduleName, creditPoints, language, moduleDetails });
       await newCourse.save();
       res.status(200).json(newCourse);
@@ -69,8 +72,11 @@ exports.deleteCourse = async (req, res) => {
 
 exports.addEvent = async (req, res) => {
     try {
-      const { startDate, endDate, startTime, endTime, eventDetails, eventType } = req.body;
-      const newEvent = new Event({ startDate, endDate, startTime, endTime, eventDetails, eventType });
+      const { startDate, endDate, startTime, endTime, eventDetails, eventType, status } = req.body;
+    //   if (!startDate || !endDate || !startTime || !endTime || !eventDetails || !eventType || !status) {
+    //     return res.status(400).json({ error: 'All fields are required' });
+    //   }
+      const newEvent = new Event({ startDate, endDate, startTime, endTime, eventDetails, eventType, status });
       await newEvent.save();
       res.status(200).json(newEvent);
     } catch (error) {

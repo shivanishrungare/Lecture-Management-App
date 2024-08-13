@@ -26,7 +26,7 @@ export const AdminEvents = () => {
                     <div className="admin-page-actions">
                         <h1 className="font-face page-subtitle">Events and Public Holidays</h1>
                         <button className='add-button' onClick={() => openModal('events')}>
-                            <img src={add} alt='add' width='25px' height='25px'/>
+                            <img src={add} alt='add' width='30px' height='25px'/>
                             <span className='font-face'>New Event</span>
                         </button>
                     </div>

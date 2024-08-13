@@ -1,5 +1,5 @@
 .form-container {
-    width: 600px;
+    width: 650px;
     margin: 0 auto;
     padding: 20px;
     background: #f9f9f9;
@@ -35,7 +35,8 @@
   
  .fields {
     width: 100%;
-    padding: 8px;
+    height: 40px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
@@ -59,18 +60,15 @@
     justify-content: center;
   }
 
-  button[type="button"] {
+  .form-group-button button[type="button"] {
     background-color: #6c757d;
     margin-right: 20px;
   }
   
-  button[type="button"]:hover, button[type="submit"]:hover {
-    background-color: #DF4807;
+  .form-group-button button[type="button"]:hover, button[type="submit"]:hover {
+    background-color: #e5a48a;
   }
   
-  button[type="button"]:hover {
-    background-color: #5a6268;
-  }
 
   .modal-overlay {
     position: fixed;
@@ -98,4 +96,8 @@
 
   .multiple-select{
     padding: '8px 5px';
+  }
+
+  #demo-multiple-chip {
+    padding: 9px;
   }

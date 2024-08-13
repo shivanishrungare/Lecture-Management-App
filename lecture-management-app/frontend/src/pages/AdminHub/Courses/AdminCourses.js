@@ -26,7 +26,7 @@ export const AdminCourses = () => {
                     <div className="admin-page-actions">
                         <h1 className="font-face page-subtitle">Courses and modules</h1>
                         <button className='add-button' onClick={() => openModal('courses')}>
-                            <img src={add} alt='add' width='25px' height='25px'/>
+                            <img src={add} alt='add' width='30px' height='25px'/>
                             <span className='font-face'>New Course</span>
                         </button>
                     </div>

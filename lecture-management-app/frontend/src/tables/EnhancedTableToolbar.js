@@ -5,8 +5,10 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit'
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { alpha } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
 export const EnhancedTableToolbar = (props) => {
   const { numSelected, title } = props;
@@ -43,11 +45,34 @@ export const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
+        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Tooltip title="Edit">
+            <IconButton aria-label="Edit" 
+                sx={{ 
+                backgroundColor: '#ffffff',  
+                color: '#DF4807',
+                '&:hover': {
+                  backgroundColor: '#D9D9D9',
+                }
+              }}
+            >
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton aria-label="Delete"
+          sx={{ 
+            backgroundColor: '#ffffff',  
+            color: '#DF4807',
+            '&:hover': {
+              backgroundColor: '#ffffff',
+            }
+          }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+      </Box>
       ) : (
         <Tooltip title="Filter list">
           <IconButton>
