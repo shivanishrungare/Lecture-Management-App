@@ -1,7 +1,8 @@
 const User = require('../models/userSchema')
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs')
-const {generateToken} = require("../utils/jwtUtils")
+const { generateToken } = require("../utils/jwtUtils")
+require('dotenv').config();
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -147,6 +148,7 @@ exports.rejectedUsers = async (req, res) => {
   }
 }
 
+
 exports.approveUserStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -165,8 +167,14 @@ exports.approveUserStatus = async (req, res) => {
     const updatedUser = await user.save();
 
     if (status === 'approved') {
+      console.log('EMAIL_USER:', process.env.EMAIL_USER); 
+      console.log('EMAIL_PASS:', process.env.EMAIL_PASS);
+
       const transporter = nodemailer.createTransport({
         service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS,
@@ -174,25 +182,26 @@ exports.approveUserStatus = async (req, res) => {
       });
 
       const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: {
+          name: "LPMSync",
+          address: process.env.EMAIL_USER,
+        },
         to: user.email,
         subject: 'Registration Approved',
         text: 'Your registration has been approved.',
       };
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error('Email sending error:', error);
-        } else {
-          console.log('Email sent:', info.response);
-        }
-      });
+      try {
+       transporter.sendMail(mailOptions);
+        console.log("Email sent successfully");
+      } catch (error) {
+        console.error('Error sending email:', error);
+      }
     }
 
     res.status(200).json(updatedUser);
   } catch (error) {
     console.error('Error updating user:', error);
-    res.status(400).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 };
-
