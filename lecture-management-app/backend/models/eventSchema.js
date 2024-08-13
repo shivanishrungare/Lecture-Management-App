@@ -39,7 +39,12 @@ const eventSchema = new mongoose.Schema({
         type: String,
         enum: ['Public Holiday', 'Convocation', 'Summer Break', 'Campus Event', 'Christmas Break', 'Other'],
         required: true,
-    }
+    },
+    status: {
+        type: String,
+        enum: ['Block', 'Open'],
+        default: 'Open',
+    },
 },{
     timestamps: true,
 })

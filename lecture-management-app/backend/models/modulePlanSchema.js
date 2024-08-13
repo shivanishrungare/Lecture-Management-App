@@ -1,24 +1,25 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
 
 const modulePlanSchema = new mongoose.Schema({
     block: {
         type: Number,
-        enum: ['1','2','3','4','5a','5b','6','7','8'],
+        min: 1, 
+        max: 8, 
         required: true,
     },
     batch: {
         type: String,
-        match: /^\d{4}-\d{4}$/, 
         required: true,
         trim: true,
     },
     semester: {
         type: Number,
-        enum: ['1', '2', '3', '4'],
+        min: 1, 
+        max: 8, 
         required: true
     },
     studyProgram: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Course',
         required: true,
     },
@@ -38,14 +39,14 @@ const modulePlanSchema = new mongoose.Schema({
         }
     },
     moduleName: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        type: String,
+        // ref: 'Course',
         trim: true,
         required: true,
     },
     professors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
+        // ref: 'User',
         required: true
     }],
     message: {
@@ -54,13 +55,13 @@ const modulePlanSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['in progress', 'completed', 'approved'],
-        default: 'in progress',
+        enum: ['progress', 'completed', 'approved'],
+        default: 'progress',
     },
-    conflicts: {
-        type: Boolean,
-        default: false
-    },
+    // conflicts: {
+    //     type: Boolean,
+    //     default: false
+    // },
 },{
     timestamps: true,
 })
