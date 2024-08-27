@@ -9,6 +9,7 @@ app.use(express.json());
 
 router.get('/', userController.getAllUsers);
 router.get('/id/:id', userController.getUserById);
+router.get('/professors', userController.getProfessors)
 router.get('/pendingUsers', userController.pendingUsers);
 router.get('/approvedUsers', userController.approvedUsers);
 router.get('/rejectedUsers', userController.rejectedUsers);

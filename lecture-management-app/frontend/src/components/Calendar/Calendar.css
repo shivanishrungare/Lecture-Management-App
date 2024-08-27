@@ -7,7 +7,7 @@
 .calendar-container{
     width: 80%;
     margin-left: 300px;
-    margin-top: 48px;
+    margin-top: 45px;
     border: 1px solid #e9ded9;
     padding: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1)
@@ -47,3 +47,45 @@
     border-color: #DF4807;
     color: #ffffff;
 }
+
+.fc .fc-toolbar-title {
+    color: #DF4807;
+    font-size: 22px;
+    font-family: 'Inter';
+}
+
+.fc .fc-header-toolbar .fc-toolbar-chunk {
+    font-family: 'Inter';
+    font-size: 14px;
+  }
+    
+
+  .fc .fc-button-group .fc-button {
+    font-family: 'Inter';
+  }
+  
+
+  .fc .fc-button.fc-today-button {
+    font-family: 'Inter';
+    font-size: 14px;
+  }
+
+  .fc .fc-col-header-cell-cushion{
+    font-family: 'Inter';
+    font-size: 14px;
+  }
+
+  .fc .fc-daygrid-day-number {
+    font-family: 'Inter';
+    font-size: 14px;
+  }
+
+  .fc .fc-timegrid-slot-label-cushion{
+    font-family: 'Inter';
+    font-size: 14px;
+  }
+
+  .fc-event {
+    background-color: var(--fc-event-background-color, #bddf88) ;
+    border-color: var(--fc-event-border-color, #1f3ab3) !important;
+  }

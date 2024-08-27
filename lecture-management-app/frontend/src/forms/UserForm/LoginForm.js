@@ -34,9 +34,16 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
           headers: { 'Content-Type': 'application/json' },
         });
         console.log(response.data);
-        const { token, role, initials } = response.data;
-        login(token, role, initials);
-        navigate('/home');
+        const { token, role, initials, status } = response.data;
+        if (status === 'approved') {
+          login(token, role, initials, status);
+          navigate('/home');
+        } else if (status === 'pending') {
+            setErrorMsg('Your registration approval is still pending. Please wait for the approval');
+        } else {
+            setErrorMsg('Your registration is rejected. You are not verified to login');
+        }
+      
       } catch (err) {
         if (!err?.response) {
           setErrorMsg('No response from server');
@@ -62,7 +69,7 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
             <div className='user-form-row'>
               <div className='font-face user-form-group'>
                 <label className='user-form-title'>Login</label>
-                {errorMsg && <p className="error-message">{errorMsg}</p>}
+                {errorMsg && <p className="font-face error-message">{errorMsg}</p>}
                 <input
                   type='text'
                   className='font-face login-input-field'

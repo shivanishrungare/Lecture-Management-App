@@ -153,4 +153,13 @@ input[type="checkbox"] {
     transition: color 0.3s ease;
 }
   
-  
+.error-message{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+    padding: 5px;
+    color: #ff0000;
+    background-color: #f8efef;
+    border: 1px solid  #ff0000;
+    border-radius: 8px;
+}

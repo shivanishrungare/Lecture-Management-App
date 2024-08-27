@@ -105,24 +105,24 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
               <label className='user-form-title'>Create Account</label>
               <div className='user-form-row-inputs'>
                 <select
-                  className="input-field"
+                  className="font-face input-field"
                   name="role"
                   value={userData.role}
                   onChange={handleChange}
                   required
                 >
-                  <option value="" disabled>Choose user role</option>
+                  <option value="" disabled>Select user role</option>
                   <option value="Admin">Admin</option>
                   <option value="Professor">Professor</option>
                 </select>
                 <select
-                  className="input-field"
+                  className="font-face input-field"
                   name="title"
                   value={userData.title}
                   onChange={handleChange}
                   required
                 >
-                  <option value="" disabled>Choose title</option>
+                  <option value="" disabled>Select title</option>
                   <option value="Mr.">Mr.</option>
                   <option value="Mrs.">Mrs.</option>
                   <option value="Ms.">Ms.</option>

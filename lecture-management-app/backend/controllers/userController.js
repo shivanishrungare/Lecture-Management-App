@@ -13,6 +13,18 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
+exports.getProfessors = async( req,res ) => {
+  try {
+    const professors = await User.find({ role: 'Professor' }, 'firstName lastName');
+
+    res.json(professors);
+  } catch (error) {
+    console.error('Error fetching professors:', error);
+    res.status(500).json({ error: 'Failed to fetch professors' });
+  }
+
+}
+
 
 exports.getUserById = async (req, res) => {
     try {
@@ -77,8 +89,10 @@ exports.loginUser = async (req, res) => {
     const initials = `${existingUser.firstName.charAt(0)}${existingUser.lastName.charAt(0)}`
 
     const token = generateToken(existingUser);
+
+    const status= existingUser.status
     
-    res.status(200).json({ token, role, initials, message: 'Login successful' });
+    res.status(200).json({ token, role, initials, status, message: 'Login successful' });
   } catch (error) {
     console.error('Error logging user:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -154,7 +168,7 @@ exports.approveUserStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (status !== 'approved' && status !== 'rejected') {
+    if (!['approved', 'rejected'].includes(status)) {
       return res.status(400).json({ message: 'Invalid status update' });
     }
 
@@ -167,32 +181,29 @@ exports.approveUserStatus = async (req, res) => {
     const updatedUser = await user.save();
 
     if (status === 'approved') {
-      console.log('EMAIL_USER:', process.env.EMAIL_USER); 
-      console.log('EMAIL_PASS:', process.env.EMAIL_PASS);
-
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false,
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-      });
-
-      const mailOptions = {
-        from: {
-          name: "LPMSync",
-          address: process.env.EMAIL_USER,
-        },
-        to: user.email,
-        subject: 'Registration Approved',
-        text: 'Your registration has been approved.',
-      };
-
       try {
-       transporter.sendMail(mailOptions);
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        });
+
+        const mailOptions = {
+          from: {
+            name: "LPMSync",
+            address: process.env.EMAIL_USER,
+          },
+          to: user.email,
+          subject: 'Registration Approved',
+          text: 'Your registration has been approved.',
+        };
+
+        await transporter.sendMail(mailOptions);
         console.log("Email sent successfully");
       } catch (error) {
         console.error('Error sending email:', error);
