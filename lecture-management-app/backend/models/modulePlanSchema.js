@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const modulePlanSchema = new mongoose.Schema({
     block: {
-        type: Number,
+        type: String,
         min: 1, 
         max: 8, 
         required: true,
@@ -19,17 +19,17 @@ const modulePlanSchema = new mongoose.Schema({
         required: true
     },
     studyProgram: {
-        type: String,
-        ref: 'Course',
+        type: String, 
         required: true,
+        trim: true,
     },
     startDate: {
-        type: Date,
+        type: String,
         required: true,
         trim: true,
     },
     endDate: {
-        type: Date,
+        type: String,
         required: true,
         validate: {
             validator: function(value) {
@@ -39,15 +39,13 @@ const modulePlanSchema = new mongoose.Schema({
         }
     },
     moduleName: {
-        type: String,
-        // ref: 'Course',
+        type: String, 
         trim: true,
         required: true,
     },
     professors: [{
-        type: String,
-        // ref: 'User',
-        required: true
+        id: String,   
+        name: String,
     }],
     message: {
         type: String,
@@ -58,10 +56,6 @@ const modulePlanSchema = new mongoose.Schema({
         enum: ['progress', 'completed', 'approved'],
         default: 'progress',
     },
-    // conflicts: {
-    //     type: Boolean,
-    //     default: false
-    // },
 },{
     timestamps: true,
 })

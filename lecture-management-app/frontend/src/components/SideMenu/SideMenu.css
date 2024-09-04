@@ -1,6 +1,6 @@
 .side-menu-container {
     height: 100%;
-    width: 180px;
+    width: 200px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

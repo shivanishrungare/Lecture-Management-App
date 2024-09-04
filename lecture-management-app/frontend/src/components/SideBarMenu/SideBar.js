@@ -14,7 +14,7 @@ export const SideBar = () => {
             <NavLink to='/home' className='icon home'  activeClassName='active'></NavLink>
             <NavLink to='/board'className='icon status' activeClassName='active'></NavLink>
             {role === 'Admin' && (
-              <NavLink to='/admin' className='icon adminhub'activeClassName='active'/>
+              <NavLink to='/admin/events' className='icon adminhub'activeClassName='active'/>
             )}
             <NavLink to='/help' className='icon help' activeClassName='active'></NavLink>
         </div>

@@ -6,6 +6,9 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const express = require('express');
 const bodyParser= require('body-parser')
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger'); 
+// const authenticateUser = require('../middleware/authenticateUser');
 
 dotenv.config();
 
@@ -13,7 +16,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
+// router.use(authenticateUser);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/admin', adminRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/plan', planRoutes);

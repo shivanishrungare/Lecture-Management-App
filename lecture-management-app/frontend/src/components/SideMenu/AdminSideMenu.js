@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './SideMenu.css';
 
 export const AdminSideMenu = ({ onMenuClick }) => {
-  const [activeLink, setActiveLink] = useState('Events and Holidays'); 
+  const [activeLink, setActiveLink] = useState('Events and Holidays');
 
   const handleLinkClick = (linkName) => {
     setActiveLink(linkName);
@@ -17,25 +18,28 @@ export const AdminSideMenu = ({ onMenuClick }) => {
     <div>
       <div className='side-menu-container'>
         <p className='font-face page-title'>Admin Hub</p>
-        <div className='side-menu-links'> 
-          <a
+        <div className='side-menu-links'>
+          <Link
+            to="/admin/events" // Correct route
             onClick={() => handleLinkClick('Events and Holidays')}
             className={`font-face admin-link-events ${activeLink === 'Events and Holidays' ? 'active' : ''}`}
           >
             Events and Holidays
-          </a>
-          <a
+          </Link>
+          <Link
+            to="/admin/courses" // Correct route
             onClick={() => handleLinkClick('Courses and Modules')}
             className={`font-face admin-link-courses ${activeLink === 'Courses and Modules' ? 'active' : ''}`}
           >
             Courses and Modules
-          </a>
-          <a
+          </Link>
+          <Link
+            to="/admin/registrations" // Correct route
             onClick={() => handleLinkClick('User Registrations')}
             className={`font-face admin-link-users ${activeLink === 'User Registrations' ? 'active' : ''}`}
           >
             User Registrations
-          </a>
+          </Link>
         </div>
       </div>
     </div>
