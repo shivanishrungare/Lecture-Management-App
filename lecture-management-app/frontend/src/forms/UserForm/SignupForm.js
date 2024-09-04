@@ -10,6 +10,7 @@ import { SignUpSuccess } from '../../components/Dialogs/ModalPopUp/SignUpSuccess
 export const SignupForm = ({ onRequestClose, switchToLogin }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalType, setModalType] = useState('');
+  const [errorMsg, setErrorMsg] = useState(''); // Consolidate all errors here
 
   const openModal = (type) => {
     setModalType(type);
@@ -31,7 +32,6 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
     password: '',
     passwordConfirm: '',
   });
-  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,15 +50,16 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setErrorMsg(''); // Clear error message on new submit attempt
 
+    // Basic validation checks
     if (userData.password !== userData.passwordConfirm) {
-      setError('Passwords do not match.');
+      setErrorMsg('Passwords do not match.');
       return;
     }
 
     if (userData.password.length < 6) {
-      setError('Password must be at least 6 characters long.');
+      setErrorMsg('Password must be at least 6 characters long.');
       return;
     }
 
@@ -80,6 +81,7 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
       localStorage.setItem('token', token);
       openModal('SignUpSuccess');
 
+      // Clear form fields on success
       setUserData({
         firstName: '',
         lastName: '',
@@ -91,18 +93,19 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
         passwordConfirm: '',
       });
     } catch (err) {
-      setError(err.response?.data?.error || 'An error occurred');
+      // Catch and display error from server or generic message
+      setErrorMsg(err.response?.data?.error || 'An error occurred during registration.');
     }
   };
 
   return (
     <div className='user-form-container'>
       <div className='user-form-content'>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className='user-form-row'>
             <div className='font-face user-form-group'>
               <label className='user-form-title'>Create Account</label>
+              {errorMsg && <div style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>{errorMsg}</div>}
               <div className='user-form-row-inputs'>
                 <select
                   className="font-face input-field"

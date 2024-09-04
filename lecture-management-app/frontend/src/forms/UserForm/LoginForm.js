@@ -10,6 +10,7 @@ import './UserForm.css';
 
 export const LoginForm = ({ onRequestClose, switchToRegister }) => {
     const { login } = useContext(AuthContext);
+
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
       userName: '',
@@ -33,10 +34,11 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
           formData, {
           headers: { 'Content-Type': 'application/json' },
         });
+       
+        const { token, role, initials, status, userId } = response.data;
         console.log(response.data);
-        const { token, role, initials, status } = response.data;
         if (status === 'approved') {
-          login(token, role, initials, status);
+          login(token, role, initials, status,  userId);
           navigate('/home');
         } else if (status === 'pending') {
             setErrorMsg('Your registration approval is still pending. Please wait for the approval');
@@ -69,7 +71,7 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
             <div className='user-form-row'>
               <div className='font-face user-form-group'>
                 <label className='user-form-title'>Login</label>
-                {errorMsg && <p className="font-face error-message">{errorMsg}</p>}
+                {errorMsg &&  <div style={{ color: 'red', marginBottom: '10px', fontSize: '12px' }}>{errorMsg}</div>}
                 <input
                   type='text'
                   className='font-face login-input-field'

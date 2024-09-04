@@ -12,9 +12,9 @@ export const SignUpSuccess = ({onRequestClose}) => {
                 <h1 className='font-face modal-title'>Registration Successful</h1>
             </div>
             <div className='success-modal-message'>
-                <p className='font-face'>Your account must be manually approved by admin <br/> 
+                <p className='font-face register-msg'>Your account must be manually approved by admin <br/> 
                 You will receive an email once your account is verified</p>
-                <button className='modal-popup-button' onClick={onRequestClose}>Ok</button>
+                <button className='modal-popup-button' onClick={onRequestClose}>OK</button>
             </div>
         </div>     
     </div>

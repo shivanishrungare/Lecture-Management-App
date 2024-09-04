@@ -84,7 +84,9 @@ exports.loginUser = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
+
     const role = existingUser.role;
+    const userId = existingUser._id;
 
     const initials = `${existingUser.firstName.charAt(0)}${existingUser.lastName.charAt(0)}`
 
@@ -92,7 +94,7 @@ exports.loginUser = async (req, res) => {
 
     const status= existingUser.status
     
-    res.status(200).json({ token, role, initials, status, message: 'Login successful' });
+    res.status(200).json({ token, role, initials, userId, status, message: 'Login successful' });
   } catch (error) {
     console.error('Error logging user:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -216,3 +218,25 @@ exports.approveUserStatus = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+  exports.rejectUser = async (req, res) => {
+    try {
+      const { id } = req.params;
+      await User.findByIdAndUpdate(id, { status: 'rejected' });
+      res.status(200).json({ message: 'User rejected successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Error rejecting user' });
+    }
+  };
+
+  // Revert user to pending
+  exports.revertUser = async (req, res) => {
+    try {
+      const { id } = req.params;
+      await User.findByIdAndUpdate(id, { status: 'pending' });
+      res.status(200).json({ message: 'User status reverted to pending' });
+    } catch (error) {
+      res.status(500).json({ error: 'Error reverting user to pending' });
+    }
+  };

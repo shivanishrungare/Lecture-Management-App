@@ -23,5 +23,12 @@ router.put('/id/:id', userController.updateUserById);
 router.delete('/id/:id', userController.deleteUser);
 
 
+// Reject user
+router.put('/reject/:id', userController.rejectUser);
+
+// Revert user to pending status
+router.put('/revert/:id', userController.revertUser);
+
+
 
 module.exports = router;

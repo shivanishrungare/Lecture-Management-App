@@ -15,37 +15,55 @@ import {
 } from '@mui/material';
 import './Calendar.css';
 
-export const Calendar = () => {
+export const Calendar = ({ userId, role }) => {
   const [events, setEvents] = useState([]);
   const [open, setOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [roomNumber, setRoomNumber] = useState('');
+  const [eventColors, setEventColors] = useState({}); 
+  const [lectureColors, setLectureColors] = useState({}); 
+
 
   useEffect(() => {
     fetchEvents();
-  }, []);
+  }, [userId, role]);
 
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/events');
-      console.log(response.data);
+      let fetchedEvents = [];
+    
 
-      const data = response.data;
+      // Fetch admin events (both Admin and Professor see admin events)
+      const adminEventsResponse = await axios.get('http://localhost:5000/api/admin/events');
+      const adminEvents = adminEventsResponse.data.map(event => ({
+        title: event.eventDetails,
+        start: `${event.startDate}T${event.startTime}`,
+        end: `${event.endDate}T${event.endTime}`,
+        backgroundColor: getEventColor(event._id), // Assign a random color
+        borderColor: getEventColor(event._id),     // Use the same color for border
+        textColor: '#ffffff',
+        id: event._id,
+        roomNumber: event.room || '',
+      }));
+      fetchedEvents = [...fetchedEvents, ...adminEvents];
 
-      const coloredEvents = data.map(event => {
-        return {
-          title: event.eventDetails,
-          start: `${event.startDate}T${event.startTime}`,
-          end: `${event.endDate}T${event.endTime}`,
-          backgroundColor: getRandomColor(),
-          borderColor: getRandomColor(),
-          textColor: '#ffffff',
-          id: event._id,
-          roomNumber: event.room || '', 
-        };
-      });
+      // Fetch approved lecture plans (Admin sees all, Professor sees only their own)
+      const lecturePlansResponse = await axios.get(`http://localhost:5000/api/plan/approvedLecturePlans/${userId}`);
+      const lecturePlans = lecturePlansResponse.data.map(plan => ({
+        title: plan.moduleName || plan.lectureDetails,
+        start: `${plan.lectureDate}T${plan.startTime}`,
+        end: `${plan.lectureDate}T${plan.endTime}`,
+        backgroundColor: getLectureColor(plan._id), // Assign a random color
+        borderColor: getLectureColor(plan._id),     // Use the same color for border
+        roomNumber: plan.room || '',
+        professors: plan.professors || [],
+        id: plan._id,
+      }));
 
-      setEvents(coloredEvents);
+      fetchedEvents = [...fetchedEvents, ...lecturePlans];
+
+      // Set the events state with the combined events
+      setEvents(fetchedEvents);
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -65,24 +83,36 @@ export const Calendar = () => {
 
   const handleSaveRoomNumber = async () => {
     if (selectedEvent) {
-        const updatedEvent = {
-            room: roomNumber,  
-        };
-
-        try {
-            const response = await axios.put(`http://localhost:5000/api/admin/event/${selectedEvent.id}`, updatedEvent);
-
-            if (response.status === 200) {
-                console.log('Room number updated successfully');
-                selectedEvent.setExtendedProp('roomNumber', roomNumber);
-
-                handleClose();
-            }
-        } catch (error) {
-            console.error('Error updating room number:', error);
+      const updatedEvent = {
+        room: roomNumber,
+      };
+  
+      try {
+        if (selectedEvent.extendedProps.professors) {
+          // It's a lecture, update the lecture plan room
+          const response = await axios.put(`http://localhost:5000/api/plan/lecturePlan/${selectedEvent.id}`, updatedEvent);
+  
+          if (response.status === 200) {
+            console.log('Lecture room number updated successfully');
+            selectedEvent.setExtendedProp('roomNumber', roomNumber);
+            handleClose();
+          }
+        } else {
+          // It's an admin event, update the event room
+          const response = await axios.put(`http://localhost:5000/api/admin/event/${selectedEvent.id}`, updatedEvent);
+  
+          if (response.status === 200) {
+            console.log('Admin event room number updated successfully');
+            selectedEvent.setExtendedProp('roomNumber', roomNumber);
+            handleClose();
+          }
         }
+      } catch (error) {
+        console.error('Error updating room number:', error);
+      }
     }
-};
+  };
+  
 
   const getRandomColor = () => {
     const letters = '0123456789ABCDEF';
@@ -91,6 +121,27 @@ export const Calendar = () => {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  };
+
+  const getLectureColor = (lectureId) => {
+    if (!lectureColors[lectureId]) {
+      // Assign a random color if the lecture doesn't already have one
+      const color = getRandomColor();
+      setLectureColors((prevColors) => ({ ...prevColors, [lectureId]: color }));
+      return color;
+    }
+    return lectureColors[lectureId]; // Return the stored color if already assigned
+  };
+  
+
+  const getEventColor = (eventId) => {
+    if (!eventColors[eventId]) {
+      // Assign a random color if the event doesn't already have one
+      const color = getRandomColor();
+      setEventColors((prevColors) => ({ ...prevColors, [eventId]: color }));
+      return color;
+    }
+    return eventColors[eventId]; // Return the stored color if already assigned
   };
 
   const formatDateTime = (dateString) => {
@@ -117,21 +168,21 @@ export const Calendar = () => {
           eventTimeFormat={{
             hour: '2-digit',
             minute: '2-digit',
-            meridiem: 'short'
+            meridiem: 'short',
           }}
         />
       </div>
 
-      <Dialog open={open} onClose={handleClose} sx={{width:'500px', height:'750px', alignSelf:'center', justifySelf:'center'}}>
-        <DialogTitle>Event Details</DialogTitle>
+      <Dialog open={open} onClose={handleClose} sx={{ padding: '10px', alignSelf: 'center', justifySelf: 'center' }}>
+        <DialogTitle sx={{ color: '#DF4807', fontSize: '20px' }}>Event Details</DialogTitle>
         <DialogContent>
           {selectedEvent && (
             <>
-              <Typography variant="h6">Title: {selectedEvent.title}</Typography>
-              <Typography variant="body1">
+              <Typography sx={{ color: '#424242', fontSize: '16px' }}>Event name: {selectedEvent.title}</Typography>
+              <Typography sx={{ color: '#424242', fontSize: '14px' }}>
                 <strong>Start:</strong> {formatDateTime(selectedEvent.start)}
               </Typography>
-              <Typography variant="body1">
+              <Typography sx={{ color: '#424242', fontSize: '14px', marginBottom: '10px' }}>
                 <strong>End:</strong> {formatDateTime(selectedEvent.end)}
               </Typography>
               <TextField
@@ -151,10 +202,8 @@ export const Calendar = () => {
           <Button onClick={handleClose} color="secondary">
             Close
           </Button>
-          <Button 
-          onClick={handleSaveRoomNumber} 
-          color="primary">
-            Save Changes
+          <Button onClick={handleSaveRoomNumber} color="primary">
+            Save
           </Button>
         </DialogActions>
       </Dialog>

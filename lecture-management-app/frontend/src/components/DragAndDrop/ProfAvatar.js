@@ -1,16 +1,6 @@
 import { AvatarGroup, Avatar } from '@mui/material';
 import React from 'react';
 
-
-function getInitials(name) {
-  if (!name) return ''; 
-
-  const nameParts = name.split(' '); 
-  const initials = nameParts.map(part => part[0]).join('');
-
-  return initials.toUpperCase();
-}
-
 function getColorByIndex(index) {
   const colors = [
     '#E91E63', // Pink
@@ -24,6 +14,15 @@ function getColorByIndex(index) {
   ];
 
   return colors[index % colors.length];
+}
+
+function getInitials(professor) {
+  const nameParts = professor.name.trim().split(' ');
+  if (nameParts.length === 1) {
+    return nameParts[0].charAt(0).toUpperCase();
+  }
+  const initials = nameParts[0].charAt(0).toUpperCase() + nameParts[nameParts.length - 1].charAt(0).toUpperCase();
+  return initials;
 }
 
 export const ProfAvatar = ({ professors }) => {
@@ -51,5 +50,6 @@ export const ProfAvatar = ({ professors }) => {
     </AvatarGroup>
   )
 }
+
 
 
