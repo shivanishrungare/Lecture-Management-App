@@ -1,0 +1,15 @@
+.planning-content{
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    margin-top: 80px;
+    margin-left: 100px;
+}
+
+.planning-buttons{
+    display: flex;
+    width: 38%;
+    height: 10%;
+    justify-content: right;
+
+}

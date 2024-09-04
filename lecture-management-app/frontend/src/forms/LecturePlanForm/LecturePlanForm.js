@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -6,6 +8,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 const ITEM_HEIGHT = 45;
 const ITEM_PADDING_TOP = 8;
@@ -18,110 +26,368 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Kelly Hansen',
-  'Bradley Henry',
-  'April Tucker',
-  'Carlos Hubbard',
-  'Ralph Alexander'
-];
-
-function getStyles(name, personName, theme) {
+function getStyles(name, selectedNames, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
+      selectedNames.indexOf(name) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
 }
 
-export const LecturePlanForm = ({onRequestClose}) => {
-    const theme = useTheme();
-    const [personName, setPersonName] = React.useState([]);
-  
-    const handleChange = (event) => {
-      const {
-        target: { value },
-      } = event;
-      setPersonName(
-        typeof value === 'string' ? value.split(',') : value,
-      );
+export const LecturePlanForm = ({ onRequestClose }) => {
+  const { moduleId } = useParams(); 
+  const theme = useTheme();
+  const [professors, setProfessors] = useState([]);
+  const [moduleStartDate, setModuleStartDate] = useState(null);
+  const [moduleEndDate, setModuleEndDate] = useState(null);
+  const [existingLectures, setExistingLectures] = useState([]);
+  const [eventsAndHolidays, setEventsAndHolidays] = useState([]);
+  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    lectureWeek: '',
+    lectureDate: '',
+    startTime: '',
+    endTime: '',
+    professors: [], 
+    lectureDetails: '',
+    lectureUnits: '',
+  });
+  const [warningOpen, setWarningOpen] = useState(false);
+  const [warningMessage, setWarningMessage] = useState('');
+  const [allowSubmission, setAllowSubmission] = useState(true); 
+
+  useEffect(() => {
+    const fetchProfessors = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/users/professors');
+        setProfessors(response.data);
+      } catch (error) {
+        console.error('Error fetching professors:', error);
+      }
     };
+
+    const fetchModuleData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/plan/modulePlan/${moduleId}`);
+        setModuleStartDate(new Date(response.data.startDate)); 
+        setModuleEndDate(new Date(response.data.endDate));
+      } catch (error) {
+        console.error('Error fetching module data:', error);
+      }
+    };
+
+    const fetchExistingLectures = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/plan/lecturePlans/${moduleId}`);
+        setExistingLectures(response.data);
+      } catch (error) {
+        console.error('Error fetching existing lectures:', error);
+      }
+    };
+
+    const fetchEventsAndHolidays = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/admin/events'); 
+        setEventsAndHolidays(response.data);
+      } catch (error) {
+        console.error('Error fetching events/holidays:', error);
+      }
+    };
+
+    fetchProfessors();
+    fetchModuleData();
+    fetchExistingLectures();
+    fetchEventsAndHolidays();
+  }, [moduleId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!allowSubmission) {
+      return; // Block form submission if not allowed
+    }
+
+    setError('');
+
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/plan/lecturePlan/${moduleId}`,
+        {
+          lectureWeek: formData.lectureWeek,
+          lectureDate: formData.lectureDate,
+          startTime: formData.startTime,
+          endTime: formData.endTime,
+          professors: formData.professors.map(prof => prof.name), 
+          lectureDetails: formData.lectureDetails,
+          lectureUnits: formData.lectureUnits,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      console.log('Response:', response.data);
+      setFormData({
+        lectureWeek: '',
+        lectureDate: '',
+        startTime: '',
+        endTime: '',
+        professors: [],
+        lectureDetails: '',
+        lectureUnits: '',
+      });
+      onRequestClose();
+      window.location.reload(); 
+    } catch (error) {
+      console.error('Error:', error.response?.data);
+      setError(error.response?.data?.message || 'An error occurred');
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+  
+    setFormData((prevData) => {
+      let newFormData = { ...prevData, [name]: value };
+  
+      if (name === 'lectureDate' && moduleStartDate && moduleEndDate) {
+        const selectedDate = new Date(value);
+  
+        // Check if the selected date is within the module's date range
+        if (selectedDate < moduleStartDate || selectedDate > moduleEndDate) {
+          setWarningMessage('The lecture date is outside the module start and end dates.');
+          setWarningOpen(true);
+          // Allow submission, but warn the user
+        }
+  
+        // Check if the selected date conflicts with an event/holiday
+        const eventConflict = eventsAndHolidays.some(event => {
+          const eventStartDate = new Date(event.startDate);
+          const eventEndDate = new Date(event.endDate);
+          return selectedDate >= eventStartDate && selectedDate <= eventEndDate; // Event date range check
+        });
+  
+        if (eventConflict) {
+          setWarningMessage('The selected date is blocked for an event or holiday. You can proceed, but be aware of this conflict.');
+          setWarningOpen(true);
+        }
+  
+        // Check for lecture conflicts based on the lecture date only
+        const lectureConflict = existingLectures.some((lecture) => {
+          return lecture.lectureDate === value; // Conflict based on the same date
+        });
+  
+        if (lectureConflict) {
+          setWarningMessage('A lecture is already scheduled for this date. You can proceed, but be aware of this conflict.');
+          setWarningOpen(true);
+        }
+  
+        // Check for conflicts in other approved modules involving the same professor(s)
+        // const checkConflictsInOtherModules = async () => {
+        //   try {
+        //     const response = await axios.get(`http://localhost:5000/api/plan/approvedLecturePlans/${userId}`, {
+        //       params: { professorIds: formData.professors.map((prof) => prof.id) },
+        //     });
+        //     const approvedLectures = response.data;
+  
+        //     const moduleConflict = approvedLectures.some((lecture) => {
+        //       return lecture.lectureDate === value; // Check if there's a date conflict in other modules
+        //     });
+  
+        //     if (moduleConflict) {
+        //       setWarningMessage('A lecture is already scheduled for this professor in another approved module on this date. You can proceed, but be aware of this conflict.');
+        //       setWarningOpen(true);
+        //     }
+        //   } catch (error) {
+        //     console.error('Error fetching approved lectures:', error);
+        //   }
+        // };
+  
+        // checkConflictsInOtherModules();
+  
+        // Calculate lecture week based on selected date and module start date
+        const daysDifference = Math.floor((selectedDate - moduleStartDate) / (1000 * 60 * 60 * 24));
+        const lectureWeek = Math.floor(daysDifference / 7) + 1;
+        newFormData = { ...newFormData, lectureWeek };
+      }
+  
+      if (name === 'startTime') {
+        const startTimeDate = new Date(`1970-01-01T${value}:00Z`);
+        const endTimeDate = new Date(startTimeDate.getTime() + 3 * 60 * 60 * 1000 + 15 * 60 * 1000);
+        const endTime = endTimeDate.toISOString().substr(11, 5);
+  
+        newFormData = { ...newFormData, endTime };
+      }
+  
+      return newFormData;
+    });
+  };
+  
+  const handleWarningCancel = () => {
+    setWarningOpen(false);
+    setAllowSubmission(false); // Keep blocking submission
+    setError('You cannot proceed due to the event conflict.');
+  };
+
+  const handleProfessorsChange = (event) => {
+    const { value } = event.target;
+  
+    const selectedProfessors = value.map(selectedName => {
+      const professor = professors.find(
+        prof => `${prof.firstName} ${prof.lastName}` === selectedName
+      );
+      return professor ? { id: professor._id, name: selectedName } : null;
+    }).filter(Boolean);
+  
+    setFormData(prevData => ({
+      ...prevData,
+      professors: selectedProfessors,  // Set as array of {id, name}
+    }));
+  };
+  
   return (
     <div className='form-container'>
-        <form>
+      <form onSubmit={handleSubmit}>
         <div className='row'>
-            <div className='form-group'>
-                <label className='font-face'>Lecture week</label>
-                <input  type='number' className='fields' placeholder='Enter week'/>
-            </div>
-            <div className='form-group'>
-                    <label className='font-face'>Lecture date</label>
-                    <input  type='date' className='fields'/>
-            </div>
+          <div className='form-group'>
+            <label className='font-face'>Lecture Date</label>
+            <input
+              type='date'
+              className='fields'
+              name='lectureDate'
+              value={formData.lectureDate}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className='form-group'>
+            <label className='font-face'>Lecture Week</label>
+            <input
+              type='number'
+              className='fields'
+              name='lectureWeek'
+              value={formData.lectureWeek}
+              onChange={handleInputChange}
+              disabled
+            />
+          </div>
         </div>
         <div className='row'>
-                <div className='form-group'>
-                    <label className='font-face'>Start time</label>
-                    <input  type='time' className='fields'/>
-                </div>
-                <div className='form-group'>
-                    <label className='font-face'>End time</label>
-                    <input  type='time' className='fields'/>
-                </div>
+          <div className='form-group'>
+            <label className='font-face'>Start Time</label>
+            <input
+              type='time'
+              className='fields'
+              name='startTime'
+              value={formData.startTime}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className='form-group'>
+            <label className='font-face'>End Time</label>
+            <input
+              type='time'
+              className='fields'
+              name='endTime'
+              value={formData.endTime}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
         <div className='row'>
-                <div className='form-group'>
-                    <label className='font-face'>Professor</label>
-                    <FormControl sx={{ m: 0, width: 600}}>
-                    <Select
-                    id="demo-multiple-chip"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput className='multiple-select' sx={{ display: 'flex', flexWrap: 'wrap', padding: '0px' }}/>}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value) => (
-                            <Chip key={value} label={value} />
-                        ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                    >
-                    {names.map((name) => (
-                        <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
-                        >
-                    {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-                </div>
+          <div className='form-group'>
+            <label className='font-face'>Lecture Units</label>
+            <input
+              type='text'
+              className='fields'
+              placeholder='Enter lecture units'
+              name='lectureUnits'
+              value={formData.lectureUnits}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className='form-group'>
+            <label className='font-face'>Professor</label>
+            <FormControl sx={{ m: 0, width: 320 }}>
+            <Select
+              id="demo-multiple-chip"
+              multiple
+              name="professors"
+              value={formData.professors.map((prof) => prof.name)} // Display professor names
+              onChange={handleProfessorsChange} // Custom handler to set both id and name
+              input={
+                <OutlinedInput
+                  className="multiple-select"
+                  sx={{ display: 'flex', flexWrap: 'wrap', padding: '0px', height: '50px' }}
+                />
+              }
+              renderValue={(selected) => (
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                  {selected.map((value) => (
+                    <Chip key={value} label={value} />
+                  ))}
+                </Box>
+              )}
+              MenuProps={MenuProps}
+            >
+              {professors.map((professor) => {
+                const fullName = `${professor.firstName} ${professor.lastName}`;
+                return (
+                  <MenuItem
+                    key={professor._id}
+                    value={fullName} 
+                    style={getStyles(fullName, formData.professors.map((prof) => prof.name), theme)} // Styling based on selection
+                  >
+                    {fullName} 
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+
+          </div>
         </div>
         <div className='row'>
-                <div className='form-group'>
-                    <label className='font-face'>Lecture details</label>
-                    <input  type='text' className='fields' placeholder='Enter lecture details'/>
-                </div>
-        </div>
-        <div className='row'>
-                <div className='form-group'>
-                    <label className='font-face'>Lecture units</label>
-                    <input  type='text' className='fields' placeholder='Enter event details'/>
-                </div>
+          <div className='form-group'>
+            <label className='font-face'>Lecture Details</label>
+            <input
+              type='text'
+              className='fields'
+              placeholder='Enter lecture details'
+              name='lectureDetails'
+              value={formData.lectureDetails}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
         <div className='row'>
           <div className='form-group-button'>
-            <button type='button' onClick={onRequestClose}>Cancel</button>
+            <button type='button' onClick={onRequestClose}>
+              Cancel
+            </button>
             <button type='submit'>Submit</button>
           </div>
-        </div> 
-        </form>
-    </div>
-  )
-}
+        </div>
+      </form>
 
+      {/* Warning Dialog */}
+    <Dialog
+      open={warningOpen}
+      onClose={handleWarningCancel}  // Close the dialog if user clicks outside
+      aria-labelledby='alert-dialog-title'
+      aria-describedby='alert-dialog-description'
+    >
+      <DialogTitle id='alert-dialog-title'>Date Conflict</DialogTitle>
+      <DialogContent>
+        <DialogContentText id='alert-dialog-description'>
+          {warningMessage}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setWarningOpen(false)}>
+          OK
+        </Button>
+      </DialogActions>
+    </Dialog>
+  </div>
+  );
+};
