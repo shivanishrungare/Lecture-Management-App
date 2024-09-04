@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { CoursesTable } from "../../../tables/CoursesTable";
+import { CoursesTable } from "../../../tables/Courses/CoursesTable";
 import { ModalForm } from "../../../forms/ModalForm"; 
 import { AddCourseForm } from '../../../forms/CourseForm/AddCourseForm'
 import add from '../../../assets/icons/add.svg';

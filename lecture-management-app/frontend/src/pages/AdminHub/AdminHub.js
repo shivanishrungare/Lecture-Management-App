@@ -2,28 +2,13 @@ import React, { useState } from 'react';
 import { NavbarUser } from '../../components/NavigationBar/NavbarUser';
 import { SideBar } from '../../components/SideBarMenu/SideBar';
 import { AdminSideMenu } from '../../components/SideMenu/AdminSideMenu';
-import { AdminEvents } from './Events/AdminEvents';
-import { AdminCourses } from './Courses/AdminCourses';
-import { UserRegistrations } from './UserRegistrations/UserRegistrations';
+import { Outlet } from 'react-router-dom'; // Import Outlet for nested routes
 
 export const AdminHub = () => {
   const [activeComponent, setActiveComponent] = useState('Events and Holidays');
 
   const handleMenuClick = (component) => {
     setActiveComponent(component);
-  };
-
-  const renderComponent = () => {
-    switch (activeComponent) {
-      case 'Events and Holidays':
-        return <AdminEvents />;
-      case 'Courses and Modules':
-        return <AdminCourses />;
-      case 'User Registrations':
-        return <UserRegistrations />;
-      default:
-        return <AdminEvents />;
-    }
   };
 
   return (
@@ -33,7 +18,7 @@ export const AdminHub = () => {
         <SideBar />
         <AdminSideMenu onMenuClick={handleMenuClick} />
         <div className="admin-content-area">
-          {renderComponent()}
+          <Outlet />
         </div>
       </div>
     </div>

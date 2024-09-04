@@ -1,7 +1,7 @@
-import axios from 'axios'
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
-export const AddEventsForm = ({ onRequestClose }) => {
+export const AddEventsForm = ({ onRequestClose, initialData, onFormSubmit }) => {
   const [error, setError] = useState('');
   const [eventData, setEventData] = useState({
     startDate: '',
@@ -13,27 +13,28 @@ export const AddEventsForm = ({ onRequestClose }) => {
     status: '',
   });
 
+  useEffect(() => {
+    if (initialData) {
+      setEventData(initialData);
+    }
+  }, [initialData]);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault();  // Prevent default form submission behavior
+
     setError('');
 
     try {
       const response = await axios.post(
         'http://localhost:5000/api/admin/event',
-        {
-          startDate: eventData.startDate,
-          endDate: eventData.endDate,
-          startTime: eventData.startTime,
-          endTime: eventData.endTime,
-          eventDetails: eventData.eventDetails,
-          eventType: eventData.eventType,
-          status: eventData.status,
-        },
+        eventData,
         {
           headers: { 'Content-Type': 'application/json' },
         }
       );
-      console.log('Response:', response.data); 
+      if (onFormSubmit) {
+        onFormSubmit(eventData);  // Call the callback to trigger refresh
+      }
       setEventData({
         startDate: '',
         endDate: '',
@@ -43,9 +44,19 @@ export const AddEventsForm = ({ onRequestClose }) => {
         eventType: '',
         status: '',
       });
+      onRequestClose();
+      window.location.reload();
+
     } catch (error) {
-      console.error('Error:', error.response.data); 
-      setError(error.response?.data?.error || 'An error occurred');
+      console.error('Error:', error); 
+
+      // Check if error.response is defined
+      if (error.response) {
+        console.error('Error Response:', error.response);
+        setError(error.response.data?.message || 'An error occurred while submitting the form.');
+      } else {
+        setError('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -127,7 +138,8 @@ export const AddEventsForm = ({ onRequestClose }) => {
               value={eventData.eventType}
               onChange={handleChange}
             >
-              <option value='Public holiday'>Public holiday</option>
+              <option value=''>Select event type</option>
+              <option value='Public Holiday'>Public Holiday</option>
               <option value='Campus Event'>Campus Event</option>
               <option value='Summer Break'>Summer Break</option>
               <option value='Convocation'>Convocation</option>
@@ -144,6 +156,7 @@ export const AddEventsForm = ({ onRequestClose }) => {
               value={eventData.status}
               onChange={handleChange}
             >
+              <option value=''>Select status</option>
               <option value='Block'>Block</option>
               <option value='Open'>Open</option>
             </select>

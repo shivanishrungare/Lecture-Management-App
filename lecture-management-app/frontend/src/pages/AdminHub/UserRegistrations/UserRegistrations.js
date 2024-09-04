@@ -1,6 +1,6 @@
 import React from "react";
 import '../AdminHub.css';
-import { UserRegTable } from "../../../tables/UserRegTable";
+import { UserRegTable } from "../../../tables/User Registration/UserRegTable";
 
 
 export const UserRegistrations = () => {

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -12,11 +10,12 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { EnhancedTableHead } from './EnhancedTableHead';
-import { EnhancedTableToolbar } from './EnhancedTableToolbar';
+import { UserEnhancedTableHead } from './UserEnhancedTableHead';
+import { EnhancedTableToolbar } from './UserEnhancedTableToolbar';
 import { stableSort, getComparator } from './tableUtils';
+import { tablePropTypes } from './tablePropTypes';
 
-export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteEndpoint }) => {
+export const UserGenericTable = ({ columns, fetchData, title, activeTable, onApprove, onReject, onDelete, onRevert }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState(columns[0].id);
   const [selected, setSelected] = useState([]);
@@ -24,17 +23,14 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
-  const [editingItem, setEditingItem] = useState(null);
 
-  // Fetch rows using the fetchData function passed as a prop
   useEffect(() => {
     const fetchRows = async () => {
-      const result = await fetchData();  // Call fetchData prop
-      setRows(result);                   // Set rows with fetched data
+      const data = await fetchData();
+      setRows(data);
     };
-
     fetchRows();
-  }, [fetchData]);  // Run this effect whenever fetchData changes
+  }, [fetchData]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -85,8 +81,7 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
@@ -97,61 +92,18 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
     [order, orderBy, page, rowsPerPage, rows]
   );
 
-  const handleEdit = () => {
-    if (selected.length === 1) {
-      const id = selected[0];
-      const rowToEdit = rows.find((row) => row.id === id);
-      setEditingItem(rowToEdit);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (selected.length > 0) {
-      try {
-        await Promise.all(selected.map(async (id) => {
-          await axios.delete(`http://localhost:5000/api/${deleteEndpoint}/${id}`);
-        }));
-
-        setRows(rows.filter((row) => !selected.includes(row.id)));
-        setSelected([]);
-      } catch (error) {
-        console.error('Error deleting:', error.response?.data);
-      }
-    }
-  };
-
-  const handleFormClose = () => {
-    setEditingItem(null);
-  };
-
-  const handleFormSubmit = async (formData) => {
-    try {
-      let response;
-      if (editingItem) {
-        response = await axios.put(`http://localhost:5000/api/${deleteEndpoint}/${editingItem.id}`, formData);
-      } else {
-        response = await axios.post(`http://localhost:5000/api/${deleteEndpoint}`, formData);
-      }
-
-      const updatedRows = editingItem
-        ? rows.map((row) => (row.id === editingItem.id ? response.data : row))
-        : [...rows, response.data];
-
-      setRows(updatedRows);
-      handleFormClose();
-    } catch (error) {
-      console.error('Error submitting form:', error.response?.data);
-    }
-  };
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
           title={title}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
+          selectedIds={selected}  // Pass selected IDs
+          onApprove={onApprove}  // Approve handler
+          onReject={onReject} 
+          onRevert={onRevert} // Reject handler
+          onDelete={onDelete}  // Delete handler
+          activeTable={activeTable}  // To control Delete button visibility
         />
         <TableContainer>
           <Table
@@ -159,7 +111,7 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
-            <EnhancedTableHead
+            <UserEnhancedTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -230,28 +182,8 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      {editingItem && (
-        <FormComponent
-          initialData={editingItem}
-          onRequestClose={handleFormClose}
-          onSubmit={handleFormSubmit}
-        />
-      )}
     </Box>
   );
 };
 
-GenericTable.propTypes = {
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      numeric: PropTypes.bool,
-      disablePadding: PropTypes.bool,
-    })
-  ).isRequired,
-  fetchData: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  FormComponent: PropTypes.elementType.isRequired,
-  deleteEndpoint: PropTypes.string.isRequired,
-};
+UserGenericTable.propTypes = tablePropTypes;

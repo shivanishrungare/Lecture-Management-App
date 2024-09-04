@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { EventsTable } from "../../../tables/EventsTable";
+import { EventsTable } from "../../../tables/Events/EventsTable";
 import { ModalForm } from "../../../forms/ModalForm";
 import { AddEventsForm } from '../../../forms/EventsForm/AddEventsForm';
 import add from '../../../assets/icons/add.svg';
@@ -8,6 +8,11 @@ import '../AdminHub.css';
 export const AdminEvents = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [formType, setFormType] = useState('');
+    const [refresh, setRefresh] = useState(false);  
+
+    const handleRefresh = () => {
+        setRefresh(!refresh); 
+      };
 
     const openModal = (type) => {
       setFormType(type);
@@ -35,7 +40,7 @@ export const AdminEvents = () => {
                     </div>
                 </div>
                 <ModalForm isOpen={modalIsOpen} onRequestClose={closeModal}>
-                    {formType === 'events' && <AddEventsForm onRequestClose={closeModal} />}
+                    {formType === 'events' && <AddEventsForm  onFormSubmit={handleRefresh} onRequestClose={closeModal} />}
                 </ModalForm>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
-import { GenericTable } from './GenericTable';
-import { fetchCourses } from './fetchData';
+import { GenericTable } from '../GenericTable';
+import { fetchCourses } from '../fetchData';
+import { AddCourseForm } from '../../forms/CourseForm/AddCourseForm';
 
 const courseColumns = [
   { id: 'studyProgram', label: 'Study Program' },
@@ -11,6 +12,12 @@ const courseColumns = [
 ];
 
 export const CoursesTable = () => {
-  return <GenericTable columns={courseColumns} fetchData={fetchCourses} />;
-};
+  return <GenericTable 
+  columns={courseColumns} 
+  fetchData={fetchCourses} 
+  title="Courses" 
+  FormComponent={AddCourseForm}
+  deleteEndpoint="admin/course"
+  />
+}
 
