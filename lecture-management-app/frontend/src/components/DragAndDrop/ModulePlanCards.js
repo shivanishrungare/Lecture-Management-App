@@ -18,7 +18,7 @@ export const ModulePlanCards = ({ userId, role }) => {
 
   const changeModuleStatus = async (moduleId, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/plan/modulePlan/${moduleId}/status`, { status });
+      await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/plan/modulePlan/${moduleId}/status`, { status });
     } catch (error) {
       console.error('Error updating module plan status:', error);
     }

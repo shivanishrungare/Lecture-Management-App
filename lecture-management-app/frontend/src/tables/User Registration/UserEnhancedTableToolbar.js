@@ -21,6 +21,27 @@ export const EnhancedTableToolbar = ({
   onRevert,
   activeTable,
 }) => {
+
+  const handleApproveClick = (event) => {
+    event.preventDefault(); 
+    onApprove(selectedIds); 
+  };
+
+  const handleRejectClick = (event) => {
+    event.preventDefault(); 
+    onReject(selectedIds); 
+  };
+
+  const handleDeleteClick = (event) => {
+    event.preventDefault(); 
+    onDelete(selectedIds); 
+  };
+
+  const handleRevertClick = (event) => {
+    event.preventDefault(); 
+    onRevert(selectedIds); 
+  };
+
   return (
     <Toolbar
       sx={{
@@ -54,13 +75,12 @@ export const EnhancedTableToolbar = ({
 
       {numSelected > 0 && (
         <Box sx={{ display: 'flex', gap: 1 }}>
-          {/* Show Approve/Reject buttons for Pending Requests table */}
           {activeTable === 'Pending Requests' && (
             <>
               <Tooltip title="Approve">
                 <IconButton
                   aria-label="Approve"
-                  onClick={() => onApprove(selectedIds)}
+                  onClick={handleApproveClick} 
                   sx={{
                     backgroundColor: '#ffffff',
                     color: '#28a745',
@@ -76,7 +96,7 @@ export const EnhancedTableToolbar = ({
               <Tooltip title="Reject">
                 <IconButton
                   aria-label="Reject"
-                  onClick={() => onReject(selectedIds)}
+                  onClick={handleRejectClick} 
                   sx={{
                     backgroundColor: '#ffffff',
                     color: '#FF6347',
@@ -91,13 +111,12 @@ export const EnhancedTableToolbar = ({
             </>
           )}
 
-          {/* Show Delete/Revert buttons for Approved or Rejected tables */}
           {(activeTable === 'Approved Requests' || activeTable === 'Rejected Requests') && (
             <>
               <Tooltip title="Revert">
                 <IconButton
                   aria-label="Revert"
-                  onClick={() => onRevert(selectedIds)}
+                  onClick={handleRevertClick}
                   sx={{
                     backgroundColor: '#ffffff',
                     color: '#1E90FF',
@@ -113,7 +132,7 @@ export const EnhancedTableToolbar = ({
               <Tooltip title="Delete">
                 <IconButton
                   aria-label="Delete"
-                  onClick={() => onDelete(selectedIds)}
+                  onClick={handleDeleteClick} 
                   sx={{
                     backgroundColor: '#ffffff',
                     color: '#DF4807',
@@ -136,10 +155,9 @@ export const EnhancedTableToolbar = ({
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  selectedIds: PropTypes.array.isRequired, // Pass selected IDs
-  onApprove: PropTypes.func.isRequired,
+  selectedIds: PropTypes.array.isRequired, 
   onReject: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired, // For Delete functionality
-  onRevert: PropTypes.func.isRequired, // For Revert functionality
-  activeTable: PropTypes.string.isRequired, // To control which buttons are visible
+  onDelete: PropTypes.func.isRequired, 
+  onRevert: PropTypes.func.isRequired, 
+  activeTable: PropTypes.string.isRequired, 
 };

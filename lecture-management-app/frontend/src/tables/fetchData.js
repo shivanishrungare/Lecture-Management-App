@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const fetchCourses = async () => {
-  const response = await axios.get('http://localhost:5000/api/admin/courses');
+  const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/courses`);
   return response.data.map(course => ({
     id: course._id,
     studyProgram: course.studyProgram,
@@ -13,7 +13,7 @@ export const fetchCourses = async () => {
 };
 
 export const fetchEvents = async () => {
-  const response = await axios.get('http://localhost:5000/api/admin/events');
+  const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/events`);
   return response.data.map(event => ({
     id: event._id,
     startDate: event.startDate, 
@@ -26,7 +26,7 @@ export const fetchEvents = async () => {
 }; 
 
 export const fetchPendingUsers = async () => {
-  const response = await axios.get('http://localhost:5000/api/users/pendingUsers');
+  const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/users/pendingUsers`);
   const users = response.data.users;
   return users.map(pendingUser => ({
     id: pendingUser._id,
@@ -40,7 +40,7 @@ export const fetchPendingUsers = async () => {
 }; 
 
 export const fetchApprovedUsers = async () => {
-  const response = await axios.get('http://localhost:5000/api/users/approvedUsers');
+  const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/users/approvedUsers`);
   const users = response.data.users;
   return users.map(approvedUser => ({
     id: approvedUser._id,
@@ -54,7 +54,7 @@ export const fetchApprovedUsers = async () => {
 };
 
 export const fetchRejectedUsers = async () => {
-  const response = await axios.get('http://localhost:5000/api/users/rejectedUsers');
+  const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/users/rejectedUsers`);
   const users = response.data.users;
   return users.map(rejectedUser => ({
     id: rejectedUser._id,

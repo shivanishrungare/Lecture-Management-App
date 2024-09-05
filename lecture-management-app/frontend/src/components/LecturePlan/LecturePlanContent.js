@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,8 +9,9 @@ import UploadIcon from '@mui/icons-material/Upload';
 import DownloadIcon from '@mui/icons-material/Download';
 import ImageIcon from '@mui/icons-material/Image';
 import TableChartIcon from '@mui/icons-material/TableChart';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
 import { exportToICS } from '../../services/export/exportToICS';
-import { exportToExcel } from '../../services/export/exportFile'
+import { exportToExcel } from '../../services/export/exportFile';
 import './LectureGrid.css';
 import { fetchModulePlanById } from './fetchLecPlanData';
 import { AuthContext } from '../../services/api/auth';
@@ -22,6 +23,8 @@ export const LecturePlanContent = ({ onAddWeek, lecturePlans }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formType, setFormType] = useState('');
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   const openModal = (type) => {
     setFormType(type);
@@ -36,7 +39,6 @@ export const LecturePlanContent = ({ onAddWeek, lecturePlans }) => {
   const handleExportICS = () => {
     exportToICS(lecturePlans);
   };
-
 
   const handleExportExcel = () => {
     exportToExcel(lecturePlans);
@@ -66,10 +68,21 @@ export const LecturePlanContent = ({ onAddWeek, lecturePlans }) => {
       {error ? (
         <Typography color="error">{error}</Typography>
       ) : (
-        <Typography className='font-face' sx={{ fontSize: '20px', color: '#DF4807', fontWeight: 'bold' }}>
-          Lecture Planning: {`${modulePlan.studyProgram} - ${modulePlan.moduleName} - Block ${modulePlan.block} - Batch ${modulePlan.batch} - Sem ${modulePlan.semester}`}
-          <br /> <Typography>Start Date: {`${modulePlan.startDate}  to  ${modulePlan.endDate}`}</Typography>
-        </Typography>
+        <div className='header-with-back'>
+          <ArrowBackIcon
+            onClick={() => navigate(-1)} 
+            sx={{
+              fontSize: 25, 
+              color: '#DF4807', 
+              cursor: 'pointer', 
+              marginRight: '10px',
+            }}
+          />
+          <Typography className='font-face' sx={{ fontSize: '20px', color: '#DF4807', fontWeight: 'bold' }}>
+            Lecture Planning: {`${modulePlan.studyProgram} - ${modulePlan.moduleName} - Block ${modulePlan.block} - Batch ${modulePlan.batch} - Sem ${modulePlan.semester}`}
+            <br /> <Typography>Start Date: {`${modulePlan.startDate}  to  ${modulePlan.endDate}`}</Typography>
+          </Typography>
+        </div>
       )}
       {role === 'Professor' && (
         <div className='planning-buttons'>

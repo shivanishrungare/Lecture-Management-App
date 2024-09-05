@@ -25,7 +25,7 @@ export const UserRegTable = () => {
     try {
       await Promise.all(
         ids.map(async (id) => {
-          await axios.put(`http://localhost:5000/api/users/approve/${id}`, { status: 'approved' });
+          await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/users/approve/${id}`, { status: 'approved' });
         })
       );
       window.location.reload(); // Reload the page to reflect changes
@@ -39,7 +39,7 @@ export const UserRegTable = () => {
     try {
       await Promise.all(
         ids.map(async (id) => {
-          await axios.put(`http://localhost:5000/api/users/reject/${id}`, { status: 'rejected' });
+          await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/users/reject/${id}`, { status: 'rejected' });
         })
       );
       window.location.reload(); // Reload the page to reflect changes
@@ -53,7 +53,7 @@ export const UserRegTable = () => {
     try {
       await Promise.all(
         ids.map(async (id) => {
-          await axios.put(`http://localhost:5000/api/users/revert/${id}`, { status: 'pending' });
+          await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/users/revert/${id}`, { status: 'pending' });
         })
       );
       window.location.reload(); // Reload the page to reflect changes
@@ -67,7 +67,7 @@ export const UserRegTable = () => {
     try {
       await Promise.all(
         ids.map(async (id) => {
-          await axios.delete(`http://localhost:5000/api/users/id/${id}`);
+          await axios.delete(`${import.meta.env.REACT_APP_API_URL}/api/users/id/${id}`);
         })
       );
       window.location.reload(); // Reload the page to reflect changes

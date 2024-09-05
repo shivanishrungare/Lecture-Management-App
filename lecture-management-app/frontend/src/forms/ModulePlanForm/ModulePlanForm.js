@@ -49,10 +49,10 @@ export const ModulePlanForm = ({ onRequestClose }) => {
   useEffect(() => {
     const fetchCoursesAndProfessors = async () => {
       try {
-        const coursesResponse = await axios.get('http://localhost:5000/api/admin/courses');
+        const coursesResponse = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/courses`);
         setCourses(coursesResponse.data);
 
-        const professorsResponse = await axios.get('http://localhost:5000/api/users/professors'); 
+        const professorsResponse = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/users/professors`); 
         setProfessors(professorsResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -68,7 +68,7 @@ export const ModulePlanForm = ({ onRequestClose }) => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/plan/modulePlan',
+        `${import.meta.env.REACT_APP_API_URL}/api/plan/modulePlan`,
         {
           ...formData,
           professors: formData.professors.map(prof => ({ id: prof.id, name: prof.name })),

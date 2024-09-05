@@ -33,28 +33,27 @@ export const Calendar = ({ userId, role }) => {
       let fetchedEvents = [];
     
 
-      // Fetch admin events (both Admin and Professor see admin events)
-      const adminEventsResponse = await axios.get('http://localhost:5000/api/admin/events');
+      const adminEventsResponse = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/events`);
       const adminEvents = adminEventsResponse.data.map(event => ({
         title: event.eventDetails,
         start: `${event.startDate}T${event.startTime}`,
         end: `${event.endDate}T${event.endTime}`,
-        backgroundColor: getEventColor(event._id), // Assign a random color
-        borderColor: getEventColor(event._id),     // Use the same color for border
+        backgroundColor: getEventColor(event._id),
+        borderColor: getEventColor(event._id),   
         textColor: '#ffffff',
         id: event._id,
         roomNumber: event.room || '',
       }));
       fetchedEvents = [...fetchedEvents, ...adminEvents];
 
-      // Fetch approved lecture plans (Admin sees all, Professor sees only their own)
-      const lecturePlansResponse = await axios.get(`http://localhost:5000/api/plan/approvedLecturePlans/${userId}`);
+     
+      const lecturePlansResponse = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/approvedLecturePlans/${userId}`);
       const lecturePlans = lecturePlansResponse.data.map(plan => ({
         title: plan.moduleName || plan.lectureDetails,
         start: `${plan.lectureDate}T${plan.startTime}`,
         end: `${plan.lectureDate}T${plan.endTime}`,
-        backgroundColor: getLectureColor(plan._id), // Assign a random color
-        borderColor: getLectureColor(plan._id),     // Use the same color for border
+        backgroundColor: getLectureColor(plan._id),
+        borderColor: getLectureColor(plan._id),    
         roomNumber: plan.room || '',
         professors: plan.professors || [],
         id: plan._id,
@@ -62,7 +61,7 @@ export const Calendar = ({ userId, role }) => {
 
       fetchedEvents = [...fetchedEvents, ...lecturePlans];
 
-      // Set the events state with the combined events
+    
       setEvents(fetchedEvents);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -89,8 +88,8 @@ export const Calendar = ({ userId, role }) => {
   
       try {
         if (selectedEvent.extendedProps.professors) {
-          // It's a lecture, update the lecture plan room
-          const response = await axios.put(`http://localhost:5000/api/plan/lecturePlan/${selectedEvent.id}`, updatedEvent);
+ 
+          const response = await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlan/${selectedEvent.id}`, updatedEvent);
   
           if (response.status === 200) {
             console.log('Lecture room number updated successfully');
@@ -98,8 +97,8 @@ export const Calendar = ({ userId, role }) => {
             handleClose();
           }
         } else {
-          // It's an admin event, update the event room
-          const response = await axios.put(`http://localhost:5000/api/admin/event/${selectedEvent.id}`, updatedEvent);
+      
+          const response = await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/admin/event/${selectedEvent.id}`, updatedEvent);
   
           if (response.status === 200) {
             console.log('Admin event room number updated successfully');
@@ -125,23 +124,23 @@ export const Calendar = ({ userId, role }) => {
 
   const getLectureColor = (lectureId) => {
     if (!lectureColors[lectureId]) {
-      // Assign a random color if the lecture doesn't already have one
+
       const color = getRandomColor();
       setLectureColors((prevColors) => ({ ...prevColors, [lectureId]: color }));
       return color;
     }
-    return lectureColors[lectureId]; // Return the stored color if already assigned
+    return lectureColors[lectureId]; 
   };
   
 
   const getEventColor = (eventId) => {
     if (!eventColors[eventId]) {
-      // Assign a random color if the event doesn't already have one
+
       const color = getRandomColor();
       setEventColors((prevColors) => ({ ...prevColors, [eventId]: color }));
       return color;
     }
-    return eventColors[eventId]; // Return the stored color if already assigned
+    return eventColors[eventId]; 
   };
 
   const formatDateTime = (dateString) => {

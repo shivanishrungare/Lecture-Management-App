@@ -109,7 +109,7 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
     if (selected.length > 0) {
       try {
         await Promise.all(selected.map(async (id) => {
-          await axios.delete(`http://localhost:5000/api/${deleteEndpoint}/${id}`);
+          await axios.delete(`${import.meta.env.REACT_APP_API_URL}/api/${deleteEndpoint}/${id}`);
         }));
 
         setRows(rows.filter((row) => !selected.includes(row.id)));
@@ -128,9 +128,9 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
     try {
       let response;
       if (editingItem) {
-        response = await axios.put(`http://localhost:5000/api/${deleteEndpoint}/${editingItem.id}`, formData);
+        response = await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/${deleteEndpoint}/${editingItem.id}`, formData);
       } else {
-        response = await axios.post(`http://localhost:5000/api/${deleteEndpoint}`, formData);
+        response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/api/${deleteEndpoint}`, formData);
       }
 
       const updatedRows = editingItem

@@ -11,7 +11,7 @@ const swaggerDefinition = {
     },
     servers: [
       {
-        url: 'http://localhost:5000', // Replace with your server URL
+        url: '${import.meta.env.REACT_APP_API_URL}', 
         description: 'Development server',
       },
     ],
@@ -20,7 +20,7 @@ const swaggerDefinition = {
   // Options for the swagger docs
   const options = {
     swaggerDefinition,
-    apis: ['./routes/*.js', './controllers/*.js'], // Path to the API docs
+    apis: ['./routes/*.js', './controllers/*.js'], 
   };
   
   // Initialize swagger-jsdoc

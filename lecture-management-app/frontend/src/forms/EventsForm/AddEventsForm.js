@@ -26,7 +26,7 @@ export const AddEventsForm = ({ onRequestClose, initialData, onFormSubmit }) => 
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/admin/event',
+        `${import.meta.env.REACT_APP_API_URL}/api/admin/event`,
         eventData,
         {
           headers: { 'Content-Type': 'application/json' },

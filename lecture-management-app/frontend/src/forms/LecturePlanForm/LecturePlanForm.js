@@ -60,7 +60,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
   useEffect(() => {
     const fetchProfessors = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/users/professors');
+        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/users/professors`);
         setProfessors(response.data);
       } catch (error) {
         console.error('Error fetching professors:', error);
@@ -69,7 +69,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     const fetchModuleData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/plan/modulePlan/${moduleId}`);
+        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/modulePlan/${moduleId}`);
         setModuleStartDate(new Date(response.data.startDate)); 
         setModuleEndDate(new Date(response.data.endDate));
       } catch (error) {
@@ -79,7 +79,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     const fetchExistingLectures = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/plan/lecturePlans/${moduleId}`);
+        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlans/${moduleId}`);
         setExistingLectures(response.data);
       } catch (error) {
         console.error('Error fetching existing lectures:', error);
@@ -88,7 +88,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     const fetchEventsAndHolidays = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/admin/events'); 
+        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/events`); 
         setEventsAndHolidays(response.data);
       } catch (error) {
         console.error('Error fetching events/holidays:', error);
@@ -112,7 +112,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/plan/lecturePlan/${moduleId}`,
+        `${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlan/${moduleId}`,
         {
           lectureWeek: formData.lectureWeek,
           lectureDate: formData.lectureDate,
@@ -153,18 +153,18 @@ export const LecturePlanForm = ({ onRequestClose }) => {
       if (name === 'lectureDate' && moduleStartDate && moduleEndDate) {
         const selectedDate = new Date(value);
   
-        // Check if the selected date is within the module's date range
+  
         if (selectedDate < moduleStartDate || selectedDate > moduleEndDate) {
           setWarningMessage('The lecture date is outside the module start and end dates.');
           setWarningOpen(true);
-          // Allow submission, but warn the user
+  
         }
   
-        // Check if the selected date conflicts with an event/holiday
+     
         const eventConflict = eventsAndHolidays.some(event => {
           const eventStartDate = new Date(event.startDate);
           const eventEndDate = new Date(event.endDate);
-          return selectedDate >= eventStartDate && selectedDate <= eventEndDate; // Event date range check
+          return selectedDate >= eventStartDate && selectedDate <= eventEndDate; 
         });
   
         if (eventConflict) {
@@ -172,9 +172,9 @@ export const LecturePlanForm = ({ onRequestClose }) => {
           setWarningOpen(true);
         }
   
-        // Check for lecture conflicts based on the lecture date only
+       
         const lectureConflict = existingLectures.some((lecture) => {
-          return lecture.lectureDate === value; // Conflict based on the same date
+          return lecture.lectureDate === value; 
         });
   
         if (lectureConflict) {
@@ -182,30 +182,6 @@ export const LecturePlanForm = ({ onRequestClose }) => {
           setWarningOpen(true);
         }
   
-        // Check for conflicts in other approved modules involving the same professor(s)
-        // const checkConflictsInOtherModules = async () => {
-        //   try {
-        //     const response = await axios.get(`http://localhost:5000/api/plan/approvedLecturePlans/${userId}`, {
-        //       params: { professorIds: formData.professors.map((prof) => prof.id) },
-        //     });
-        //     const approvedLectures = response.data;
-  
-        //     const moduleConflict = approvedLectures.some((lecture) => {
-        //       return lecture.lectureDate === value; // Check if there's a date conflict in other modules
-        //     });
-  
-        //     if (moduleConflict) {
-        //       setWarningMessage('A lecture is already scheduled for this professor in another approved module on this date. You can proceed, but be aware of this conflict.');
-        //       setWarningOpen(true);
-        //     }
-        //   } catch (error) {
-        //     console.error('Error fetching approved lectures:', error);
-        //   }
-        // };
-  
-        // checkConflictsInOtherModules();
-  
-        // Calculate lecture week based on selected date and module start date
         const daysDifference = Math.floor((selectedDate - moduleStartDate) / (1000 * 60 * 60 * 24));
         const lectureWeek = Math.floor(daysDifference / 7) + 1;
         newFormData = { ...newFormData, lectureWeek };
@@ -225,7 +201,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
   
   const handleWarningCancel = () => {
     setWarningOpen(false);
-    setAllowSubmission(false); // Keep blocking submission
+    setAllowSubmission(false); 
     setError('You cannot proceed due to the event conflict.');
   };
 
@@ -241,7 +217,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
   
     setFormData(prevData => ({
       ...prevData,
-      professors: selectedProfessors,  // Set as array of {id, name}
+      professors: selectedProfessors,  
     }));
   };
   
@@ -312,8 +288,8 @@ export const LecturePlanForm = ({ onRequestClose }) => {
               id="demo-multiple-chip"
               multiple
               name="professors"
-              value={formData.professors.map((prof) => prof.name)} // Display professor names
-              onChange={handleProfessorsChange} // Custom handler to set both id and name
+              value={formData.professors.map((prof) => prof.name)} 
+              onChange={handleProfessorsChange} 
               input={
                 <OutlinedInput
                   className="multiple-select"

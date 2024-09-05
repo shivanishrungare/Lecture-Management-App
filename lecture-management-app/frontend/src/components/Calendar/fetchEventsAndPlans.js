@@ -6,7 +6,7 @@ export const usePlanData = () => {
     if (!userId) return [];
 
     try {
-      const response = await axios.get(`http://localhost:5000/api/plan/approvedLecturePlans/${userId}`);
+      const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/approvedLecturePlans/${userId}`);
       return response.data.map((plan) => ({
         id: plan._id,
         title: plan.moduleName || plan.lectureDetails,
@@ -27,7 +27,7 @@ export const usePlanData = () => {
   // Fetching admin events
   const fetchAdminEvents = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/events');
+      const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/events`);
       return response.data.map((event) => ({
         id: event._id,
         title: event.eventDetails,
