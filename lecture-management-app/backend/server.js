@@ -14,12 +14,17 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-const corsOptions = {
-  origin: ["https://lecture-management-app.vercel.app", "https://lecture-management-app-etjs.vercel.app"],
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
+const allowedOrigins = ['https://lecture-management-app.vercel.app', 'https://lecture-management-app-etjs.vercel.app'];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 app.use(cors(corsOptions));
 
