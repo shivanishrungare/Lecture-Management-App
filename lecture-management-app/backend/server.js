@@ -14,9 +14,10 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+const cors = require('cors');
+app.use(cors({ origin: 'https://lecture-management-app-1-git-6e4235-shivani-shrungares-projects.vercel.app' }));
+
 app.use(bodyParser.json());
-// router.use(authenticateUser);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/admin', adminRoutes);
