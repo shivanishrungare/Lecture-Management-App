@@ -1,24 +1,29 @@
-const mongoose = require('mongoose')
-const adminRoutes = require('./routes/adminRoutes')
-const userRoutes = require('./routes/userRoutes')
-const planRoutes= require('./routes/planRoutes')
+const mongoose = require('mongoose');
+const adminRoutes = require('./routes/adminRoutes');
+const userRoutes = require('./routes/userRoutes');
+const planRoutes = require('./routes/planRoutes');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const express = require('express');
-const bodyParser= require('body-parser')
+const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger'); 
-// const authenticateUser = require('../middleware/authenticateUser');
+const swaggerSpec = require('./swagger');
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: ["https://lecture-management-app-frtnd.vercel.app"],  // Allow requests only from frontend domain
-  methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
-}));
+
+const corsOptions = {
+  origin: "https://lecture-management-app-frtnd.vercel.app",  
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
 
 app.use(bodyParser.json());
 
@@ -34,11 +39,10 @@ mongoose
     console.log("Connected to MongoDB");
     const port = process.env.PORT || 5000;
     app.listen(port, () => {
-      console.log(`Server is running on port`);
+      console.log(`Server is running on port ${port}`);
     });
   })
   .catch((error) => {
     console.error("Failed to connect to MongoDB:", error);
     process.exit(1);
   });
-
