@@ -14,8 +14,11 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-const cors = require('cors');
-app.use(cors({ origin: 'https://lecture-management-app-1-git-6e4235-shivani-shrungares-projects.vercel.app' }));
+app.use(cors({
+  origin: ["https://lecture-management-app-frl.vercel.app/"],
+  methods: ["POST", "GET"],
+  credentials: true
+}))
 
 app.use(bodyParser.json());
 
