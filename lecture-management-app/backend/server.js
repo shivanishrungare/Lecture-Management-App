@@ -14,13 +14,11 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors())
-//   {
-//   origin: ["https://lecture-management-app-frtnd.vercel.app"],
-//   methods: ["POST", "GET"],
-//   credentials: true
-// }
-
+app.use(cors({
+  origin: ["https://lecture-management-app-frtnd.vercel.app"],  // Allow requests only from frontend domain
+  methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
 
 app.use(bodyParser.json());
 
@@ -36,7 +34,7 @@ mongoose
     console.log("Connected to MongoDB");
     const port = process.env.PORT || 5000;
     app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
+      console.log(`Server is running on port`);
     });
   })
   .catch((error) => {
