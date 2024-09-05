@@ -64,7 +64,7 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/api/users/register`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/register`, {
         firstName: userData.firstName,  
         lastName: userData.lastName,
         role: userData.role,

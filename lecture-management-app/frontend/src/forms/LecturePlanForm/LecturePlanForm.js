@@ -60,7 +60,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
   useEffect(() => {
     const fetchProfessors = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/users/professors`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/professors`);
         setProfessors(response.data);
       } catch (error) {
         console.error('Error fetching professors:', error);
@@ -69,7 +69,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     const fetchModuleData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/modulePlan/${moduleId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/modulePlan/${moduleId}`);
         setModuleStartDate(new Date(response.data.startDate)); 
         setModuleEndDate(new Date(response.data.endDate));
       } catch (error) {
@@ -79,7 +79,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     const fetchExistingLectures = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlans/${moduleId}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/lecturePlans/${moduleId}`);
         setExistingLectures(response.data);
       } catch (error) {
         console.error('Error fetching existing lectures:', error);
@@ -88,7 +88,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     const fetchEventsAndHolidays = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/events`); 
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/events`); 
         setEventsAndHolidays(response.data);
       } catch (error) {
         console.error('Error fetching events/holidays:', error);
@@ -112,7 +112,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlan/${moduleId}`,
+        `${process.env.REACT_APP_API_URL}/api/plan/lecturePlan/${moduleId}`,
         {
           lectureWeek: formData.lectureWeek,
           lectureDate: formData.lectureDate,

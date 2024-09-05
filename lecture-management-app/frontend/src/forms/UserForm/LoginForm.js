@@ -30,7 +30,7 @@ export const LoginForm = ({ onRequestClose, switchToRegister }) => {
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-        const response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/api/users/login`, 
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/users/login`, 
           formData, {
           headers: { 'Content-Type': 'application/json' },
         });

@@ -6,7 +6,7 @@ export const usePlanData = () => {
     if (!userId) return [];
 
     try {
-      const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/${endpoint}/${userId}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/${endpoint}/${userId}`);
       return response.data.map((moduleplan) => ({
         id: moduleplan._id,
         block: moduleplan.block,

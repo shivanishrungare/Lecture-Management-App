@@ -33,7 +33,7 @@ export const Calendar = ({ userId, role }) => {
       let fetchedEvents = [];
     
 
-      const adminEventsResponse = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/admin/events`);
+      const adminEventsResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/events`);
       const adminEvents = adminEventsResponse.data.map(event => ({
         title: event.eventDetails,
         start: `${event.startDate}T${event.startTime}`,
@@ -47,7 +47,7 @@ export const Calendar = ({ userId, role }) => {
       fetchedEvents = [...fetchedEvents, ...adminEvents];
 
      
-      const lecturePlansResponse = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/approvedLecturePlans/${userId}`);
+      const lecturePlansResponse = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/approvedLecturePlans/${userId}`);
       const lecturePlans = lecturePlansResponse.data.map(plan => ({
         title: plan.moduleName || plan.lectureDetails,
         start: `${plan.lectureDate}T${plan.startTime}`,
@@ -89,7 +89,7 @@ export const Calendar = ({ userId, role }) => {
       try {
         if (selectedEvent.extendedProps.professors) {
  
-          const response = await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlan/${selectedEvent.id}`, updatedEvent);
+          const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/plan/lecturePlan/${selectedEvent.id}`, updatedEvent);
   
           if (response.status === 200) {
             console.log('Lecture room number updated successfully');
@@ -98,7 +98,7 @@ export const Calendar = ({ userId, role }) => {
           }
         } else {
       
-          const response = await axios.put(`${import.meta.env.REACT_APP_API_URL}/api/admin/event/${selectedEvent.id}`, updatedEvent);
+          const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/admin/event/${selectedEvent.id}`, updatedEvent);
   
           if (response.status === 200) {
             console.log('Admin event room number updated successfully');

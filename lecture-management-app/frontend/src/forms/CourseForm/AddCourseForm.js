@@ -24,7 +24,7 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.REACT_APP_API_URL}/api/admin/course`,
+                `${process.env.REACT_APP_API_URL}/api/admin/course`,
                 {
                     studyProgram: courseData.studyProgram,
                     moduleName: courseData.moduleName,

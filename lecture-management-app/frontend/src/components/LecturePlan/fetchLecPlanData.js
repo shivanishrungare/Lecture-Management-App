@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchAllLecturePlans = async (moduleId) => {
   try {
-    const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlan`);
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/lecturePlan`);
     return response.data.map(lectureplan => ({
       id: lectureplan._id,
       lectureWeek: lectureplan.lectureWeek, 
@@ -21,7 +21,7 @@ export const fetchAllLecturePlans = async (moduleId) => {
 
 export const fetchModulePlanById = async (moduleId) => {
   try {
-    const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/modulePlan/${moduleId}`);
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/modulePlan/${moduleId}`);
     
     const modulePlan = {
       id: response.data._id,
@@ -45,7 +45,7 @@ export const fetchModulePlanById = async (moduleId) => {
 
 export const fetchLecturePlansByModuleId = async (moduleId) => {
   try {
-    const response = await axios.get(`${import.meta.env.REACT_APP_API_URL}/api/plan/lecturePlans/${moduleId}`);
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/plan/lecturePlans/${moduleId}`);
     return response.data.map(lectureplan => ({
       id: lectureplan._id,
       lectureWeek: lectureplan.lectureWeek, 

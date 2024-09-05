@@ -11,7 +11,7 @@ const swaggerDefinition = {
     },
     servers: [
       {
-        url: '${import.meta.env.REACT_APP_API_URL}', 
+        url: '${process.env.REACT_APP_API_URL}', 
         description: 'Development server',
       },
     ],
