@@ -34,7 +34,7 @@ app.use('/api/plan', planRoutes);
 
 const mongodb_uri = process.env.MONGODB_URI;
 mongoose
-  .connect(mongodb_uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongodb_uri, { useUnifiedTopology: true })
   .then(() => {
     console.log("Connected to MongoDB");
     const port = process.env.PORT || 5000;
