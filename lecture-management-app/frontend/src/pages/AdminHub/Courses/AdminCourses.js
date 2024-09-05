@@ -19,6 +19,11 @@ export const AdminCourses = () => {
         setFormType('');
     };
 
+
+    const handleCourseSubmit = (courseData) => {
+        console.log('Course submitted:', courseData);
+    };
+
     return (
         <div className="admin-page-main">
             <div className="admin-page-container">
@@ -35,7 +40,7 @@ export const AdminCourses = () => {
                     </div>
                 </div>
                 <ModalForm isOpen={modalIsOpen} onRequestClose={closeModal}>
-                    {formType === 'courses' && <AddCourseForm onRequestClose={closeModal} />}
+                    {formType === 'courses' && <AddCourseForm onSubmit={handleCourseSubmit} onRequestClose={closeModal} />}
                 </ModalForm>
             </div>
         </div>

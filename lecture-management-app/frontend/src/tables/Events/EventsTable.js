@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { GenericTable } from '../GenericTable';
 import { fetchEvents } from '../fetchData';
 import { AddEventsForm } from '../../forms/EventsForm/AddEventsForm';
@@ -10,17 +10,18 @@ const eventColumns = [
   { id: 'endTime', label: 'End Time' },
   { id: 'eventDetails', label: 'Event Details' },
   { id: 'eventType', label: 'Event Type' },
+  { id: 'status', label: 'Event Status' },
 ];
 
 export const EventsTable = ({ refresh }) => {
   return (
     <GenericTable
       columns={eventColumns}
-      fetchData={fetchEvents} // Pass the fetch function to the GenericTable
+      fetchData={fetchEvents} 
       title="Events"
       FormComponent={AddEventsForm}
       deleteEndpoint="admin/event"
-      refresh={refresh} // Pass the refresh prop to trigger re-fetch
+      refresh={refresh} 
     />
   );
 };

@@ -11,7 +11,6 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
     });
     const [error, setError] = useState('');
 
-    // Populate form data with initialData when the form is mounted or when initialData changes
     useEffect(() => {
         if (initialData) {
             setCourseData(initialData);
@@ -21,7 +20,7 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-
+    
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/admin/course`,
@@ -36,8 +35,8 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
                     headers: { 'Content-Type': 'application/json' },
                 }
             );
-            console.log('Response:', response.data); 
-            onSubmit(courseData); // Call onSubmit to notify the parent component of the updated data
+            console.log('Response:', response.data);
+            onSubmit(courseData); 
             setCourseData({
                 studyProgram: '',
                 moduleName: '',
@@ -45,12 +44,17 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
                 language: '',
                 moduleDetails: '',
             });
+            onRequestClose();
         } catch (error) {
-            console.error('Error:', error.response.data); 
-            setError(error.response?.data?.error || 'An error occurred');
+            console.error('Error:', error); 
+            setError(
+                error.response?.data?.error || 
+                error.message || 
+                'An unexpected error occurred'
+            );
         }
     };
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCourseData((prevData) => ({
@@ -96,6 +100,7 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
                             value={courseData.creditPoints}
                             onChange={handleChange}
                         >
+                            <option value="">Select credit points</option>
                             <option value="8">8</option>
                             <option value="4">4</option>
                         </select>
@@ -108,7 +113,8 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
                             name='language'
                             value={courseData.language}
                             onChange={handleChange}
-                        >
+                        > 
+                            <option value="">Select language</option>
                             <option value="German">German</option>
                             <option value="English">English</option>
                         </select>

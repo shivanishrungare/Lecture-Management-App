@@ -272,14 +272,17 @@ export const LecturePlanForm = ({ onRequestClose }) => {
         <div className='row'>
           <div className='form-group'>
             <label className='font-face'>Lecture Units</label>
-            <input
-              type='text'
-              className='fields'
-              placeholder='Enter lecture units'
+            <select 
+              className='fields' 
+              placeholder='Select lecture units'
               name='lectureUnits'
               value={formData.lectureUnits}
               onChange={handleInputChange}
-            />
+            >
+               <option value="">Select lecture units</option>
+              <option value="8">8</option>
+              <option value="4">4</option>
+            </select>
           </div>
           <div className='form-group'>
             <label className='font-face'>Professor</label>

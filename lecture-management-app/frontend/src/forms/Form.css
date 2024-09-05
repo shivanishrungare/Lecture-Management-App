@@ -94,6 +94,20 @@
     width: auto;
   }
 
+  
+  .close-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    float: right;
+  }
+  
+  .close-button:hover {
+    background-color: #d32f2f;
+  }
+
   .multiple-select{
     padding: '8px 5px';
   }

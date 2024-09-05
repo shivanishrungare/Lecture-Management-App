@@ -12,7 +12,7 @@ export const ModulePlanCards = ({ userId, role }) => {
   const [progressPlan, setInProgressPlan] = useState([]);
   const [completedPlan, setCompletedPlan] = useState([]);
   const [draggedItem, setDraggedItem] = useState(null);
-  const [openConfirmation, setOpenConfirmation] = useState(false); // Dialog state
+  const [openConfirmation, setOpenConfirmation] = useState(false); 
   const navigate = useNavigate();
   const { fetchApprovedPlan, fetchInProgressPlan, fetchCompletedPlan } = usePlanData();
 
@@ -24,6 +24,12 @@ export const ModulePlanCards = ({ userId, role }) => {
     }
   };
 
+  const updateColumnState = (newColumns) => {
+    setApprovedPlan(newColumns.approved.plans);
+    setInProgressPlan(newColumns.progress.plans);
+    setCompletedPlan(newColumns.completed.plans);
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -62,15 +68,23 @@ export const ModulePlanCards = ({ userId, role }) => {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-
-    if (!destination) {
-      return;
-    }
+    
+    if (!destination) return;
 
     const sourceColumn = columns[source.droppableId];
     const destinationColumn = columns[destination.droppableId];
 
+    const isAdmin = role === 'Admin';
+
+    // Check if user is not an Admin and is trying to move a card in or out of the "Approved" column
+    if (!isAdmin && (source.droppableId === 'approved' || destination.droppableId === 'approved')) {
+      // Prevent non-Admin users from moving items in or out of "Approved" column
+      console.log('Non-Admin users cannot move items to/from the Approved column');
+      return;
+    }
+
     if (source.droppableId === destination.droppableId) {
+      // Handle reordering within the same column
       const newPlans = Array.from(sourceColumn.plans);
       const [movedPlan] = newPlans.splice(source.index, 1);
       newPlans.splice(destination.index, 0, movedPlan);
@@ -86,13 +100,19 @@ export const ModulePlanCards = ({ userId, role }) => {
       const destinationPlans = Array.from(destinationColumn.plans);
       const [movedPlan] = sourcePlans.splice(source.index, 1);
 
-      // Check if moving from 'completed' to 'approved'
-      if (source.droppableId === 'completed' && destination.droppableId === 'approved') {
-        // Save the dragged item and open confirmation dialog
-        setDraggedItem({ plan: movedPlan, sourcePlans, destinationPlans });
+      // Admins only: Move plans to or from "Approved" column
+      if (isAdmin && (destination.droppableId === 'approved' || source.droppableId === 'approved')) {
+        setDraggedItem({
+          plan: movedPlan,
+          sourcePlans,
+          destinationPlans,
+          sourceDroppableId: source.droppableId,
+          destinationDroppableId: destination.droppableId,
+          destinationTitle: destinationColumn.title,
+        });
         setOpenConfirmation(true);
       } else {
-        // Proceed with normal dragging
+        // Proceed with normal dragging if not involving "Approved"
         destinationPlans.splice(destination.index, 0, movedPlan);
         const newColumns = {
           ...columns,
@@ -106,32 +126,24 @@ export const ModulePlanCards = ({ userId, role }) => {
     }
   };
 
-  const updateColumnState = (newColumns) => {
-    setInProgressPlan(newColumns.progress.plans);
-    setCompletedPlan(newColumns.completed.plans);
-    setApprovedPlan(newColumns.approved.plans);
-  };
-
   const handleConfirmMove = () => {
-    const { plan, sourcePlans, destinationPlans } = draggedItem;
+    const { plan, sourcePlans, destinationPlans, destinationDroppableId } = draggedItem;
 
-    // Move the plan from 'completed' to 'approved'
     destinationPlans.splice(destinationPlans.length, 0, plan);
 
     const newColumns = {
       ...columns,
-      completed: { ...columns.completed, plans: sourcePlans },
-      approved: { ...columns.approved, plans: destinationPlans },
+      [draggedItem.sourceDroppableId]: { ...columns[draggedItem.sourceDroppableId], plans: sourcePlans },
+      [draggedItem.destinationDroppableId]: { ...columns[draggedItem.destinationDroppableId], plans: destinationPlans },
     };
 
     updateColumnState(newColumns);
-    changeModuleStatus(plan.id, 'approved');
+    changeModuleStatus(plan.id, destinationDroppableId);
 
     setOpenConfirmation(false);
   };
 
   const handleCancelMove = () => {
-    // Just close the confirmation dialog
     setOpenConfirmation(false);
   };
 
@@ -185,7 +197,9 @@ export const ModulePlanCards = ({ userId, role }) => {
       <Dialog open={openConfirmation} onClose={handleCancelMove}>
         <DialogTitle>Confirm Move</DialogTitle>
         <DialogContent>
-          <DialogContentText>Are you sure you want to move this plan to Approved?</DialogContentText>
+          <DialogContentText>
+            Are you sure you want to move this plan to {draggedItem?.destinationTitle}?
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelMove} color="secondary">

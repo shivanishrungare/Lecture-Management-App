@@ -1,8 +1,9 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { format } from 'date-fns';
 
-export const LecturePlanCards = ({ lecture, week }) => {
+export const LecturePlanCards = ({ lecture, week, onDelete }) => {
 
   const getColorByWeeks = (week) => {
     switch (week) {
@@ -33,9 +34,21 @@ export const LecturePlanCards = ({ lecture, week }) => {
   // Extract professor names
   const professorNames = lecture.professors.map(professor => professor.name).join(', ');
 
+  const handleDelete = () => {
+    // Trigger the delete action passed down by the parent component
+    onDelete(lecture.id);
+  };
+
   return (
-    <Card sx={{ width: '220px', height: '120px', padding: '2px', margin: '10px', borderLeft: `5px solid ${getColorByWeeks(week)}` }}>
-      <CardContent>
+    <Card sx={{ width: '250px', height: '150px', padding: '2px', margin: '10px', borderLeft: `5px solid ${getColorByWeeks(week)}`, position: 'relative' }}>
+      <IconButton 
+        aria-label="delete" 
+        onClick={handleDelete} 
+        sx={{ position: 'absolute', top: '4px', right: '5px' }}
+      >
+        <DeleteIcon sx={{ fontSize: 20, color: '#DF4807' }} />
+      </IconButton>
+      <CardContent sx={{margin: '12px'}}>
         <Typography color="text.secondary" sx={{ fontSize: '14px', fontWeight: '700', marginBottom: '10px', color: `${getColorByWeeks(week)}`, fontFamily: 'Inter' }}>
           {`Date: ${formattedDate}`}
         </Typography>

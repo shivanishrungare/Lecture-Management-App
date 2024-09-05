@@ -22,6 +22,7 @@ export const fetchEvents = async () => {
     endTime: event.endTime, 
     eventDetails: event.eventDetails, 
     eventType: event.eventType,
+    status: event.status,
   }));
 }; 
 

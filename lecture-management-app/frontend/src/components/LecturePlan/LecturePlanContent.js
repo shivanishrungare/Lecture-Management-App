@@ -65,120 +65,123 @@ export const LecturePlanContent = ({ onAddWeek, lecturePlans }) => {
 
   return (
     <div className='planning-content'>
-      {error ? (
-        <Typography color="error">{error}</Typography>
-      ) : (
-        <div className='header-with-back'>
-          <ArrowBackIcon
-            onClick={() => navigate(-1)} 
-            sx={{
-              fontSize: 25, 
-              color: '#DF4807', 
-              cursor: 'pointer', 
-              marginRight: '10px',
-            }}
-          />
-          <Typography className='font-face' sx={{ fontSize: '20px', color: '#DF4807', fontWeight: 'bold' }}>
-            Lecture Planning: {`${modulePlan.studyProgram} - ${modulePlan.moduleName} - Block ${modulePlan.block} - Batch ${modulePlan.batch} - Sem ${modulePlan.semester}`}
-            <br /> <Typography>Start Date: {`${modulePlan.startDate}  to  ${modulePlan.endDate}`}</Typography>
-          </Typography>
-        </div>
-      )}
-      {role === 'Professor' && (
-        <div className='planning-buttons'>
-          <Button
-            variant="outlined"
-            startIcon={<AddIcon />}
-            sx={{
-              fontSize: '14px',
-              backgroundColor: '#DF4807',
-              color: '#FFFFFF',
-              textTransform: 'capitalize',
-              border: '1px solid #DF4807',
-              borderRadius: '5px',
-              margin: '2px 5px',
-              '&:hover': {
-                backgroundColor: '#FFFFFF',
-                color: '#DF4807',
-              },
-            }}
-            onClick={() => openModal('lecturePlan')}
-          >
-            New Lecture
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<AddIcon />}
-            sx={{
-              backgroundColor: '#FFFFFF',
-              fontSize: '14px',
-              color: '#DF4807',
-              border: '1px solid #DF4807',
-              textTransform: 'capitalize',
-              borderRadius: '5px',
-              margin: '2px 5px',
-              '&:hover': {
-                backgroundColor: '#DF4807',
-                color: '#FFFFFF',
-              },
-            }}
-            onClick={onAddWeek}
-          >
-            Add Week
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<DownloadIcon />}
-            sx={{
-              backgroundColor: '#FFFFFF',
-              fontSize: '14px',
-              color: '#DF4807',
-              border: '1px solid #DF4807',
-              textTransform: 'capitalize',
-              borderRadius: '5px',
-              margin: '2px 5px',
-              '&:hover': {
-                backgroundColor: '#DF4807',
-                color: '#FFFFFF',
-              },
-            }}
-            onClick={handleExportICS}
-          >
-            Export ICS
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<TableChartIcon />}
-            sx={{
-              backgroundColor: '#FFFFFF',
-              fontSize: '14px',
-              color: '#DF4807',
-              border: '1px solid #DF4807',
-              textTransform: 'capitalize',
-              borderRadius: '5px',
-              margin: '2px 5px',
-              '&:hover': {
-                backgroundColor: '#DF4807',
-                color: '#FFFFFF',
-              },
-            }}
-            onClick={handleExportExcel}
-          >
-            Export Excel
-          </Button>
-        </div>
-      )}
+        {error ? (
+            <Typography color="error">{error}</Typography>
+        ) : (
+            <div className='header-with-back'>
+                <ArrowBackIcon
+                    onClick={() => navigate(-1)} 
+                    className="back-button"
+                    sx={{
+                        fontSize: 25, 
+                        color: '#DF4807', 
+                        cursor: 'pointer',
+                    }}
+                />
+                <div className='planning-title-and-buttons'>
+                    <Typography className='planning-title font-face' sx={{ fontSize: '20px', color: '#DF4807', fontWeight: 'bold' }}>
+                        Lecture Planning: {`${modulePlan.studyProgram} - ${modulePlan.moduleName} - Block ${modulePlan.block} - Batch ${modulePlan.batch} - Sem ${modulePlan.semester}`}
+                        <br />
+                        <Typography>Start Date: {`${modulePlan.startDate}  to  ${modulePlan.endDate}`}</Typography>
+                    </Typography>
+                    {role === 'Professor' && (
+                        <div className='planning-buttons'>
+                            <Button
+                                variant="outlined"
+                                startIcon={<AddIcon />}
+                                sx={{
+                                    fontSize: '14px',
+                                    backgroundColor: '#DF4807',
+                                    color: '#FFFFFF',
+                                    textTransform: 'capitalize',
+                                    border: '1px solid #DF4807',
+                                    borderRadius: '5px',
+                                    margin: '2px 5px',
+                                    '&:hover': {
+                                        backgroundColor: '#FFFFFF',
+                                        color: '#DF4807',
+                                    },
+                                }}
+                                onClick={() => openModal('lecturePlan')}
+                            >
+                                New Lecture
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<AddIcon />}
+                                sx={{
+                                    backgroundColor: '#FFFFFF',
+                                    fontSize: '14px',
+                                    color: '#DF4807',
+                                    border: '1px solid #DF4807',
+                                    textTransform: 'capitalize',
+                                    borderRadius: '5px',
+                                    margin: '2px 5px',
+                                    '&:hover': {
+                                        backgroundColor: '#DF4807',
+                                        color: '#FFFFFF',
+                                    },
+                                }}
+                                onClick={onAddWeek}
+                            >
+                                Add Week
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<DownloadIcon />}
+                                sx={{
+                                    backgroundColor: '#FFFFFF',
+                                    fontSize: '14px',
+                                    color: '#DF4807',
+                                    border: '1px solid #DF4807',
+                                    textTransform: 'capitalize',
+                                    borderRadius: '5px',
+                                    margin: '2px 5px',
+                                    '&:hover': {
+                                        backgroundColor: '#DF4807',
+                                        color: '#FFFFFF',
+                                    },
+                                }}
+                                onClick={handleExportICS}
+                            >
+                                Export ICS
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<TableChartIcon />}
+                                sx={{
+                                    backgroundColor: '#FFFFFF',
+                                    fontSize: '14px',
+                                    color: '#DF4807',
+                                    border: '1px solid #DF4807',
+                                    textTransform: 'capitalize',
+                                    borderRadius: '5px',
+                                    margin: '2px 5px',
+                                    '&:hover': {
+                                        backgroundColor: '#DF4807',
+                                        color: '#FFFFFF',
+                                    },
+                                }}
+                                onClick={handleExportExcel}
+                            >
+                                Export Excel
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        )}
 
-      <div id="lecture-plans">
-        {/* Render your lecture plans here */}
-      </div>
+        <div id="lecture-plans">
+            {/* Render your lecture plans here */}
+        </div>
 
-      <ModalForm isOpen={modalIsOpen} onRequestClose={closeModal}>
-        {formType === 'lecturePlan' && <LecturePlanForm onRequestClose={closeModal} />}
-      </ModalForm>
+        <ModalForm isOpen={modalIsOpen} onRequestClose={closeModal}>
+            {formType === 'lecturePlan' && <LecturePlanForm onRequestClose={closeModal} />}
+        </ModalForm>
     </div>
-  );
-};
+);
+}

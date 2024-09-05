@@ -1,15 +1,37 @@
-.planning-content{
+.planning-content {
     display: flex;
     width: 90%;
-    justify-content: space-between;
+    flex-direction: column;
     margin-top: 80px;
     margin-left: 100px;
+    margin-right: 100px;
 }
 
-.planning-buttons{
+.header-with-back {
+    display: flex;
+    flex-direction: column; 
+}
+
+.planning-title-and-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    margin-top: 10px; 
+}
+
+.planning-buttons {
     display: flex;
     width: 38%;
     height: 10%;
-    justify-content: right;
+    gap: 10px; 
+    justify-content: flex-end;
+}
 
+.planning-title {
+    flex-grow: 1; 
+}
+
+.back-button {
+    align-self: flex-start; /* Aligns the back button to the left */
+    cursor: pointer;
 }

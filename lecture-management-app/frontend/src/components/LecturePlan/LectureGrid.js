@@ -82,7 +82,7 @@ export const LectureGrid = ({ moduleId }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 margin: '5px',
-                width: '245px',
+                width: '280px',
                 height: '680px',
                 backgroundColor: '#ececec',
                 display: 'inline-block',

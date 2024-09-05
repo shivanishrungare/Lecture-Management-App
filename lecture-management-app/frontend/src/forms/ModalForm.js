@@ -11,6 +11,7 @@ export const ModalForm = ({ isOpen, onRequestClose, children }) => {
       onRequestClose={onRequestClose}
       className="modal-content"
       overlayClassName="modal-overlay"
+      shouldCloseOnOverlayClick={false} 
     >
       {children}
     </Modal>
