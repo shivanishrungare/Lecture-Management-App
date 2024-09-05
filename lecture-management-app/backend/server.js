@@ -13,22 +13,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-
-const allowedOrigins = ['https://lecture-management-app.vercel.app', 'https://lecture-management-app-etjs.vercel.app'];
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
-});
-
-app.use(cors(corsOptions));
-
-app.options('*', cors(corsOptions));
+app.use(cors())
 
 app.use(bodyParser.json());
 
@@ -42,11 +27,14 @@ mongoose
   .connect(mongodb_uri)
   .then(() => {
     console.log("Connected to MongoDB");
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
   })
   .catch((error) => {
     console.error("Failed to connect to MongoDB:", error);
     process.exit(1);
   });
-
 
 module.exports = app;
