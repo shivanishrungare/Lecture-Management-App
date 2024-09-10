@@ -123,6 +123,7 @@ export const ModulePlanForm = ({ onRequestClose }) => {
 
   return (
     <div className='form-container'>
+    <h2 className='font-face form-title'>Module Plan Form</h2> 
       <form onSubmit={handleSubmit}>
         <div className='row'>
           <div className='form-group'>

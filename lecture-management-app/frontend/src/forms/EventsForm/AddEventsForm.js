@@ -70,6 +70,7 @@ export const AddEventsForm = ({ onRequestClose, initialData, onFormSubmit }) => 
 
   return (
     <div className='form-container'>
+           <h2 className='font-face form-title'>Event Form</h2> 
       <form onSubmit={handleSubmit}>
         <div className='row'>
           <div className='form-group'>

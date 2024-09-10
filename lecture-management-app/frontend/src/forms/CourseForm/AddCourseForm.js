@@ -65,6 +65,7 @@ export const AddCourseForm = ({ onRequestClose, initialData, onSubmit }) => {
 
     return (
         <div className='form-container'>
+            <h2 className='font-face form-title'>Course Form</h2> 
             <form onSubmit={handleSubmit}>
                 <div className='row'>
                     <div className='form-group'>

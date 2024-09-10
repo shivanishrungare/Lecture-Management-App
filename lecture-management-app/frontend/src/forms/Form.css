@@ -119,3 +119,12 @@
   .font-face {
     font-size: 14px;
   }
+
+  .form-title{
+    color: #DF4807;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
