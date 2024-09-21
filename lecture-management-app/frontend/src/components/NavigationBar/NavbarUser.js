@@ -5,7 +5,8 @@ import './NavbarUser.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../services/api/auth';
 import { useNavigate } from 'react-router-dom';
-import { Avatar } from '@mui/material';
+import { Avatar, Tooltip } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 
 function getColorByInitial(initial) {
   const colors = [
@@ -23,7 +24,7 @@ export const NavbarUser = () => {
   const handleLogout = () => {
     try {
       logout();
-      navigate('/'); // Redirect to the landing page after logout
+      navigate('/');
     } catch (error) {
       console.error('Error during logout:', error);
     }
@@ -33,10 +34,11 @@ export const NavbarUser = () => {
     <div className='navbar-user'>
       <header>
         <nav>
-          <img src={logo} width='auto' height='45px' alt='logo'/>
+        <NavLink to='/home'><img src={logo} width='auto' height='45px' alt='logo'/></NavLink>
           <div className='navbar-user-buttons'>
             <button><img src={notification} alt='notification' width='25px' height='25px'/></button>
             {initials ? (
+              <Tooltip title="Logout">
               <button className='profile' onClick={handleLogout}>
                 <Avatar 
                   sx={{ 
@@ -51,8 +53,9 @@ export const NavbarUser = () => {
                   {initials}
                 </Avatar>
               </button>
+              </Tooltip>
             ) : (
-              <button className='profile' onClick={handleLogout}>Logout</button>
+            <button className='profile' >Logout</button>  
             )}
           </div>
         </nav>

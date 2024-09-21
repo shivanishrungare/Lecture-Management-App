@@ -133,7 +133,7 @@ export const ModulePlanForm = ({ onRequestClose }) => {
             name='block'
             value={formData.block}
             onChange={handleChange}
-            ><option value="">Select Study Program</option>
+            ><option value="" disabled selected>Select Block</option>
               <option value="1">Block 1</option>
               <option value="2">Block 2</option>
               <option value="3">Block 3</option>
@@ -145,32 +145,8 @@ export const ModulePlanForm = ({ onRequestClose }) => {
               <option value="7">Block 7</option>
               <option value="8">Block 8</option>
             </select>
-          </div>
-          <div className='form-group'>
-            <label className='font-face'>Batch</label>
-            <input  type='text' 
-            className='fields'  
-            name='batch'
-            value={formData.batch}
-            onChange={handleChange} />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='form-group'>
-            <label className='font-face'>Semester</label>
-            <select 
-            className='fields'
-            name='semester'
-            value={formData.semester}
-            onChange={handleChange}
-            ><option value="">Select Semester</option>
-              <option value="1">Semester 1</option>
-              <option value="2">Semester 2</option>
-              <option value="3">Semester 3</option>
-              <option value="4">Semester 4</option>
-            </select>
-          </div>
-          <div className='form-group'>
+            </div>
+            <div className='form-group'>
             <label className='font-face'>Study Program</label>
             <select 
             className='fields'
@@ -178,13 +154,38 @@ export const ModulePlanForm = ({ onRequestClose }) => {
             value={formData.studyProgram}
             onChange={handleChange}
           >
-            <option value="">Select Study Program</option>
+            <option value="" disabled selected>Select Study Program</option>
             {uniqueStudyPrograms.map((studyProgram, index) => (
               <option key={index} value={studyProgram}>
                 {studyProgram}
               </option>
             ))}
           </select>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='form-group'>
+            <label className='font-face'>Batch</label>
+            <input  type='text' 
+            className='fields' 
+            placeholder='Enter batch ex.- 22.02' 
+            name='batch'
+            value={formData.batch}
+            onChange={handleChange} />
+          </div>
+          <div className='form-group'>
+            <label className='font-face'>Semester</label>
+            <select 
+            className='fields'
+            name='semester'
+            value={formData.semester}
+            onChange={handleChange}
+            ><option value="" disabled selected>Select Semester</option>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+            </select>
           </div>
         </div>
         <div className='row'>
@@ -217,7 +218,7 @@ export const ModulePlanForm = ({ onRequestClose }) => {
             value={formData.moduleName}
             onChange={handleChange} 
           >
-            <option value="">Select Module</option>
+            <option value="" disabled selected>Select Module</option>
             {courses.map(course => (
               <option key={course._id} value={course.moduleName}>
                 {course.moduleName}

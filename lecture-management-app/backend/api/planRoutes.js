@@ -9,20 +9,20 @@ app.use(express.json());
 
 /**
  * @swagger
- * /api/plans/approvedPlan/{id}:
+ * /api/plan/approvedPlan/{id}:
  *   get:
  *     summary: Get approved module plan by user ID
- *     tags: [Plans]
+ *     tags: [ModulePlans]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The ID of the user to retrieve approved plans for
+ *         description: The ID of the user to retrieve approved plan for
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: List of approved module plans
+ *         description: List of approved module plan
  *         content:
  *           application/json:
  *             schema:
@@ -34,20 +34,20 @@ router.get('/approvedPlan/:id', planController.ModulePlanApproved);
 
 /**
  * @swagger
- * /api/plans/completedPlan/{id}:
+ * /api/plan/completedPlan/{id}:
  *   get:
  *     summary: Get completed module plan by user ID
- *     tags: [Plans]
+ *     tags: [ModulePlans]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The ID of the user to retrieve completed plans for
+ *         description: The ID of the user to retrieve completed plan for
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: List of completed module plans
+ *         description: List of completed module plan
  *         content:
  *           application/json:
  *             schema:
@@ -59,20 +59,20 @@ router.get('/completedPlan/:id', planController.ModulePlanCompleted);
 
 /**
  * @swagger
- * /api/plans/progressPlan/{id}:
+ * /api/plan/progressPlan/{id}:
  *   get:
- *     summary: Get module plans in progress by user ID
- *     tags: [Plans]
+ *     summary: Get module plan in progress by user ID
+ *     tags: [ModulePlans]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The ID of the user to retrieve in-progress plans for
+ *         description: The ID of the user to retrieve in-progress plan for
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: List of module plans in progress
+ *         description: List of module plan in progress
  *         content:
  *           application/json:
  *             schema:
@@ -84,10 +84,10 @@ router.get('/progressPlan/:id', planController.ModulePlanInProgress);
 
 /**
  * @swagger
- * /api/plans/modulePlan/{moduleId}:
+ * /api/plan/modulePlan/{moduleId}:
  *   get:
  *     summary: Get module plan by module ID
- *     tags: [Plans]
+ *     tags: [ModulePlans]
  *     parameters:
  *       - in: path
  *         name: moduleId
@@ -109,10 +109,10 @@ router.get('/modulePlan/:moduleId', planController.getModulePlanById);
 
 /**
  * @swagger
- * /api/plans/modulePlan:
+ * /api/plan/modulePlan:
  *   post:
  *     summary: Create a new module plan
- *     tags: [Plans]
+ *     tags: [ModulePlans]
  *     requestBody:
  *       required: true
  *       content:
@@ -129,10 +129,10 @@ router.post('/modulePlan', planController.createModulePlan);
 
 /**
  * @swagger
- * /api/plans/lecturePlan/{moduleId}:
+ * /api/plan/lecturePlan/{moduleId}:
  *   post:
  *     summary: Create a new lecture plan for a specific module
- *     tags: [Plans]
+ *     tags: [LecturePlans]
  *     parameters:
  *       - in: path
  *         name: moduleId
@@ -156,13 +156,13 @@ router.post('/lecturePlan/:moduleId', planController.createLecturePlan);
 
 /**
  * @swagger
- * /api/plans/lecturePlan:
+ * /api/plan/lecturePlan:
  *   get:
- *     summary: Get all lecture plans
- *     tags: [Plans]
+ *     summary: Get all lecture plan
+ *     tags: [LecturePlans]
  *     responses:
  *       200:
- *         description: List of all lecture plans
+ *         description: List of all lecture plan
  *         content:
  *           application/json:
  *             schema:
@@ -174,10 +174,10 @@ router.get('/lecturePlan', planController.getAllLecturePlans);
 
 /**
  * @swagger
- * /api/plans/lecturePlan/{id}:
+ * /api/plan/lecturePlan/{id}:
  *   get:
  *     summary: Get lecture plan by ID
- *     tags: [Plans]
+ *     tags: [LecturePlans]
  *     parameters:
  *       - in: path
  *         name: id
@@ -199,36 +199,10 @@ router.get('/lecturePlan/:id', planController.getLecturePlanById);
 
 /**
  * @swagger
- * /api/plans/lecturePlan/{id}:
- *   put:
- *     summary: Update lecture plan by ID
- *     tags: [Plans]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The ID of the lecture plan to update
- *         schema:
- *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/LecturePlan'
- *     responses:
- *       200:
- *         description: Lecture plan updated successfully
- *       404:
- *         description: Lecture plan not found
- */
-router.put('/lecturePlan/:id', planController.updateLecturePlanById);
-/**
- * @swagger
- * /api/plans/lecturePlans/{moduleId}:
+ * /api/plan/lecturePlans/{moduleId}:
  *   get:
- *     summary: Get lecture plans by module ID
- *     tags: [Plans]
+ *     summary: Get lecture plan by module ID
+ *     tags: [LecturePlans]
  *     parameters:
  *       - in: path
  *         name: moduleId
@@ -252,20 +226,20 @@ router.get('/lecturePlans/:moduleId', planController.getLecturePlansByModuleId);
 
 /**
  * @swagger
- * /api/plans/approvedLecturePlans/{id}:
+ * /api/plan/approvedLecturePlans/{id}:
  *   get:
- *     summary: Get approved lecture plans by user ID
- *     tags: [Plans]
+ *     summary: Get approved lecture plan by user ID
+ *     tags: [LecturePlans]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: The ID of the user to retrieve approved lecture plans for
+ *         description: The ID of the user to retrieve approved lecture plan for
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: List of approved lecture plans
+ *         description: List of approved lecture plan
  *         content:
  *           application/json:
  *             schema:
@@ -273,16 +247,16 @@ router.get('/lecturePlans/:moduleId', planController.getLecturePlansByModuleId);
  *               items:
  *                 $ref: '#/components/schemas/LecturePlan'
  *       404:
- *         description: Approved lecture plans not found
+ *         description: Approved lecture plan not found
  */
 router.get('/approvedLecturePlans/:id', planController.getApprovedLecturePlans);
 
 /**
  * @swagger
- * /api/plans/modulePlan/{id}/status:
+ * /api/plan/modulePlan/{id}/status:
  *   put:
  *     summary: Update module plan status
- *     tags: [Plans]
+ *     tags: [ModulePlans]
  *     parameters:
  *       - in: path
  *         name: id

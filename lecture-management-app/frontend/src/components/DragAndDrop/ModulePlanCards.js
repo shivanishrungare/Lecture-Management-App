@@ -76,15 +76,15 @@ export const ModulePlanCards = ({ userId, role }) => {
 
     const isAdmin = role === 'Admin';
 
-    // Check if user is not an Admin and is trying to move a card in or out of the "Approved" column
+  
     if (!isAdmin && (source.droppableId === 'approved' || destination.droppableId === 'approved')) {
-      // Prevent non-Admin users from moving items in or out of "Approved" column
+
       console.log('Non-Admin users cannot move items to/from the Approved column');
       return;
     }
 
     if (source.droppableId === destination.droppableId) {
-      // Handle reordering within the same column
+
       const newPlans = Array.from(sourceColumn.plans);
       const [movedPlan] = newPlans.splice(source.index, 1);
       newPlans.splice(destination.index, 0, movedPlan);
@@ -100,7 +100,6 @@ export const ModulePlanCards = ({ userId, role }) => {
       const destinationPlans = Array.from(destinationColumn.plans);
       const [movedPlan] = sourcePlans.splice(source.index, 1);
 
-      // Admins only: Move plans to or from "Approved" column
       if (isAdmin && (destination.droppableId === 'approved' || source.droppableId === 'approved')) {
         setDraggedItem({
           plan: movedPlan,
@@ -112,7 +111,6 @@ export const ModulePlanCards = ({ userId, role }) => {
         });
         setOpenConfirmation(true);
       } else {
-        // Proceed with normal dragging if not involving "Approved"
         destinationPlans.splice(destination.index, 0, movedPlan);
         const newColumns = {
           ...columns,
@@ -193,7 +191,6 @@ export const ModulePlanCards = ({ userId, role }) => {
         </DragDropContext>
       </div>
 
-      {/* Confirmation Dialog */}
       <Dialog open={openConfirmation} onClose={handleCancelMove}>
         <DialogTitle>Confirm Move</DialogTitle>
         <DialogContent>

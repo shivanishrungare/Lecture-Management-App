@@ -26,11 +26,36 @@
   .form-group:last-child {
     margin-right: 0;
   }
+
+  input::placeholder {
+    color: #757575;
+    opacity: 1; 
+  }
+  
+  input {
+    color: #1d1d1d; 
+    background-color: #ffffff;
+  }
+
+  input:focus {
+    outline: none; 
+    border-color: #001d9e;
+    box-shadow: 0 0 5px rgba(44, 78, 228, 0.5); 
+  }
+
+  
+  select:focus {
+    outline: none; 
+    border-color: #001d9e;
+    box-shadow: 0 0 5px rgba(44, 78, 228, 0.5); 
+  }
+  
   
   .form-container label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold;
+    font-weight:500;
+    color: #000000;
   }
   
  .fields {
@@ -41,6 +66,23 @@
     border-radius: 4px;
     box-sizing: border-box;
   }
+
+  .fields::placeholder {
+    color: #757575; 
+    opacity: 1; 
+  }
+
+  select {
+    color: #757575; 
+    background-color: #ffffff; 
+    border: 1px solid #ccc;
+    padding: 5px; 
+  }
+
+  select option:disabled {
+    display: none; 
+  }
+
 
   .form-container button {
     padding: 10px 24px;
@@ -69,7 +111,6 @@
     background-color: #e5a48a;
   }
   
-
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -114,6 +155,7 @@
 
   #demo-multiple-chip {
     padding: 9px;
+    background-color: #ffffff;
   }
 
   .font-face {

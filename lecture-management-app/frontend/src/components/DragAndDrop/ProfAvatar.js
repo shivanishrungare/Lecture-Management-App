@@ -17,6 +17,10 @@ function getColorByIndex(index) {
 }
 
 function getInitials(professor) {
+  if (!professor || !professor.name) {
+    return '?'; 
+  }
+
   const nameParts = professor.name.trim().split(' ');
   if (nameParts.length === 1) {
     return nameParts[0].charAt(0).toUpperCase();
@@ -26,6 +30,10 @@ function getInitials(professor) {
 }
 
 export const ProfAvatar = ({ professors }) => {
+  if (!professors || !Array.isArray(professors)) {
+    return null; 
+  }
+
   return (
     <AvatarGroup>
       {professors.map((professor, idx) => {
@@ -33,7 +41,7 @@ export const ProfAvatar = ({ professors }) => {
 
         return (
           <Avatar 
-          key={idx} 
+            key={idx} 
             sx={{ 
               width: '32px', 
               height: '32px', 
@@ -48,8 +56,5 @@ export const ProfAvatar = ({ professors }) => {
         );
       })}
     </AvatarGroup>
-  )
+  );
 }
-
-
-
