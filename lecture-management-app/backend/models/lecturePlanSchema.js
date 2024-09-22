@@ -1,27 +1,37 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
+const ModulePlan = require('../models/modulePlanSchema');
 
 const lecturePlanSchema = new mongoose.Schema({
     lectureWeek: {
         type: Number,
-        enum: ['1','2','3','4','5','6','7','8'],
+        min: 1,
+        max: 8,
         required: true,
     },
+    module: {
+        type: mongoose.Schema.Types.ObjectId, ref: 'ModulePlan'
+    },
     lectureDate: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ModulePlan',
+        type: String,
+        required: true,
         validate: {
-            validator: function(value) {
-                return this.startDate <= value <= this.endTime;
+            validator: async function(value) {
+                const module = await ModulePlan.findById(this.module);
+                if (!module) {
+                    throw new Error('ModulePlan not found');
+                }
+
+                return value >= module.startDate && value <= module.endDate;
             },
-            message: 'lectureDate must be between startDate and endDate'
+            message: 'lectureDate must be between the module startDate and endDate'
         }
     },
     startTime: {
-        type: Date,
+        type: String,
         required: true
     },
     endTime: {
-        type: Date,
+        type: String,
         required: true,
         validate: {
             validator: function(value) {
@@ -31,39 +41,28 @@ const lecturePlanSchema = new mongoose.Schema({
         }
     },
     professors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        _id: mongoose.Schema.Types.ObjectId,
+        id: String,
+        name: String
     }],
     lectureDetails: {
         type: String,
         required: true,
         trim: true,
     },
-    conflicts: {
-        type: Boolean,
-        default: false,
+    lectureUnits: {
+        type: Number,
+        required: true,
+        trim: true,
     },
+    room: {
+        type: String,
+        trim: true,
+    }
 },{
     timestamps: true,
 })
 
-lecturePlanSchema.pre('save', async function(next) {
-    const Lecture = mongoose.model('Lecture');
-
-    const conflictingLectures = await Lecture.find({
-        professors: { $in: this.professors }, 
-        lectureDate: this.lectureDate
-    });
-
-    if (conflictingLectures.length > 0) {
-        this.conflicts = true;
-    } else {
-        this.conflicts = false;
-    }
-
-    next();
-});
 
 const Lecture = mongoose.model('Lecture', lecturePlanSchema);
 module.exports = Lecture;

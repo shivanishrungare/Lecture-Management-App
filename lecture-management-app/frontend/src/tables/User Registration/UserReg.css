@@ -1,0 +1,19 @@
+.request-button-pending,
+.request-button-approved,
+.request-button-rejected {
+    background-color: #ffffff;
+    color: #DF4807;
+    padding: 8px 10px;
+    margin: 5px;
+    border: 2px solid #DF4807;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.request-button-pending.active,
+.request-button-approved.active,
+.request-button-rejected.active {
+    background-color: #DF4807;
+    color: #ffffff;
+}
+

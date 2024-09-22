@@ -1,0 +1,39 @@
+.admin-page-container{
+    width: 75%;
+    margin-left: 320px;
+    height: auto;
+    margin-top: 36px;
+}
+
+.admin-page-content {
+    margin-top: 0px 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-page-actions{
+    margin-bottom: 5px;
+}
+
+.page-subtitle{
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #DF4807;
+}
+
+.admin-main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+.admin-body {
+    display: flex;
+    flex: 1;
+  }
+  
+.admin-content-area {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }

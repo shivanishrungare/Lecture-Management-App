@@ -1,48 +1,66 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const eventSchema = new mongoose.Schema({
     startDate: {
-        type: Date,
+        type: String,
         required: true,
         trim: true,
     },
     endDate: {
-        type: Date,
+        type: String,
         required: true,
-        validate: {
-            validator: function(value) {
-                return this.startDate < value;
-            },
-            message: 'endDate must be after startDate'
-        }
     },
     startTime: {
-        type: Date,
+        type: String,
         required: true
     },
     endTime: {
-        type: Date,
-        required: true,
-        validate: {
-            validator: function(value) {
-                return this.startTime < value;
-            },
-            message: 'endTime must be after startTime'
-        }
+        type: String,
+        required: true
     },
     eventDetails: {
         type: String,
         trim: true,
         required: true,
     },
-    eventType:{
+    eventType: {
         type: String,
-        enum: ['Public Holiday', 'Convocation', 'Summer Break', 'Campus Event', 'Other'],
+        enum: ['Public Holiday', 'Convocation', 'Summer Break', 'Campus Event', 'Christmas Break', 'Other'],
         required: true,
+    },
+    status: {
+        type: String,
+        enum: ['Block', 'Open'],
+        default: 'Open',
+    },
+    room: {
+        type: String,
+        trim: true,
     }
-},{
+}, {
     timestamps: true,
-})
+});
 
-const Events = mongoose.model('Events', eventSchema);
-module.exports = Events;
+
+eventSchema.pre('save', function(next) {
+    const startDate = new Date(this.startDate);
+    const endDate = new Date(this.endDate);
+
+    if (endDate < startDate) {
+        return next(new Error('End date must be the same as or after the start date.'));
+    }
+
+
+    if (this.startDate === this.endDate) {
+        const startDateTime = new Date(`1970-01-01T${this.startTime}:00Z`);
+        const endDateTime = new Date(`1970-01-01T${this.endTime}:00Z`);
+        if (endDateTime <= startDateTime) {
+            return next(new Error('End time must be after start time when both times are on the same day.'));
+        }
+    }
+
+    next();
+});
+
+const Event = mongoose.model('Event', eventSchema);
+module.exports = Event;

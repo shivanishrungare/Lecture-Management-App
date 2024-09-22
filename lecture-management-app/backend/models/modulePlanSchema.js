@@ -1,34 +1,35 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose')
 
 const modulePlanSchema = new mongoose.Schema({
     block: {
-        type: Number,
-        enum: ['1','2','3','4','5a','5b','6','7','8'],
+        type: String,
+        min: 1, 
+        max: 8, 
         required: true,
     },
     batch: {
         type: String,
-        match: /^\d{4}-\d{4}$/, 
         required: true,
         trim: true,
     },
     semester: {
         type: Number,
-        enum: ['1', '2', '3', '4'],
+        min: 1, 
+        max: 8, 
         required: true
     },
     studyProgram: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        type: String, 
         required: true,
+        trim: true,
     },
     startDate: {
-        type: Date,
+        type: String,
         required: true,
         trim: true,
     },
     endDate: {
-        type: Date,
+        type: String,
         required: true,
         validate: {
             validator: function(value) {
@@ -38,15 +39,13 @@ const modulePlanSchema = new mongoose.Schema({
         }
     },
     moduleName: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Course',
+        type: String, 
         trim: true,
         required: true,
     },
     professors: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        id: String,   
+        name: String,
     }],
     message: {
         type: String,
@@ -54,12 +53,8 @@ const modulePlanSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['in progress', 'completed', 'approved'],
-        default: 'in progress',
-    },
-    conflicts: {
-        type: Boolean,
-        default: false
+        enum: ['progress', 'completed', 'approved'],
+        default: 'progress',
     },
 },{
     timestamps: true,
