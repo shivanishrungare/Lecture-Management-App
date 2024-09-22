@@ -49,7 +49,7 @@ export const EnhancedTableToolbar = ({ numSelected, title, onEdit, onDelete }) =
               <IconButton
                 aria-label="Edit"
                 onClick={onEdit}
-                disabled={numSelected !== 1} // Disable if not exactly one selected
+                disabled={numSelected !== 1} 
                 sx={{
                   backgroundColor: '#ffffff',
                   color: '#DF4807',

@@ -258,15 +258,15 @@ exports.createModulePlan = async (req, res) => {
   
       let modulePlans;
   
-      // Admin sees all approved module plans
+
       if (user.role === 'Admin') {
         modulePlans = await ModulePlan.find({ status: 'approved' }).select('_id');
       } 
-      // Professor sees only their assigned module plans
+
       else if (user.role === 'Professor') {
         modulePlans = await ModulePlan.find({
           status: 'approved',
-          'professors.id': id,  // Fetch module plans where the professor is assigned
+          'professors.id': id,  
         }).select('_id');
       } 
       else {
@@ -277,17 +277,17 @@ exports.createModulePlan = async (req, res) => {
   
       let lecturePlans;
   
-      // Admin sees all lectures for the approved module plans
+
       if (user.role === 'Admin') {
         lecturePlans = await Lecture.find({
           module: { $in: modulePlanIds }
         }).select('lectureWeek module lectureDate startTime endTime professors lectureDetails room');
       } 
-      // Professor sees only lectures where they are assigned
+     
       else if (user.role === 'Professor') {
         lecturePlans = await Lecture.find({
           module: { $in: modulePlanIds },
-          'professors.id': id // Fetch only lectures where the professor is assigned
+          'professors.id': id 
         }).select('lectureWeek module lectureDate startTime endTime professors lectureDetails room');
       }
   
@@ -300,9 +300,8 @@ exports.createModulePlan = async (req, res) => {
 
   exports.updateLecturePlanById = async (req, res) => {
       try {
-          const { id } = req.params; // Get the lecture plan ID from request parameters
+          const { id } = req.params; 
   
-          // Create an object to hold the updated fields
           const updatedData = {
               lectureWeek: req.body.lectureWeek,
               lectureDate: req.body.lectureDate,
@@ -313,19 +312,18 @@ exports.createModulePlan = async (req, res) => {
               room: req.body.room
           };
   
-          // Find the lecture plan by ID and update with new data
+
           const updatedLecturePlan = await Lecture.findByIdAndUpdate(
               id,
               updatedData,
               { new: true, runValidators: true }
           );
   
-          // Check if the lecture plan exists
+   
           if (!updatedLecturePlan) {
               return res.status(404).json({ message: 'Lecture plan not found' });
           }
   
-          // Send the updated lecture plan back to the client
           res.status(200).json(updatedLecturePlan);
       } catch (error) {
           console.error('Error updating lecture plan:', error);

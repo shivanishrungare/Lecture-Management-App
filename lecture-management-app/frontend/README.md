@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# Lecture Planning and Management Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the source code for the thesis based on a Lecture Planning and Management Application for the university.  
+The application aims to simplify the lecture scheduling process for professors and admins by offering collaboration features, streamlined planning, export functionality, conflict management, and other features.
 
-## Available Scripts
+The application is developed using the MERN stack with MongoDB as the database, Express and Node.js handling the backend server, and React.js for the frontend interface. 
 
-In the project directory, you can run:
+## Requirements:
 
-### `npm start`
+- **nodemon** installed globally.  
+  If not installed, run:
+  ```bash
+  npm i nodemon --global
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **node** v18 installed.
+  To install Node.js, run:
+  ```bash
+  nvm install node
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Steps to Run the Application:
 
-### `npm test`
+- 1. Clone the repository.
+git clone <repository_url>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 2. Navigate into the project directory.
+cd <project-directory>
 
-### `npm run build`
+- 3. Ensure to add the .env file in the following locations:
+ **./backend/.env**
+ and **./frontend/.env**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Backend (Server):
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 1. Navigate to the backend directory:
+  ```bash
+  cd backend
+  
+- 2. Install dependencies:
+    ```bash
+   npm i
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- 3. Start the server:
+    ```bash
+   npm run start
 
-### `npm run eject`
+## Frontend (Client):
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- 1. Navigate to the frontend directory:
+    ```bash
+    cd frontend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 2. Install dependencies:
+    ```bash
+    npm i
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- 3. Start the client:
+    ```bash
+    npm run start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## The app will run in development mode. 
+Open the following link to view the app in your browser: 
+http://localhost:3000
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Application Flow:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Home Page**:
+  - Displays a calendar view with events created for holidays, academic events, breaks, and classroom assignments.
 
-### Code Splitting
+- **Status Board**:
+  - Admin can initiate module planning and assign them to professors.
+  - Professors can plan lectures for the assigned modules and collaborate with other professors.
+  - Professors can change the status of the module plan from 'In Progress' to 'Completed,' and Admins can verify and approve the plan as 'Approved.' This allows both professors and admins to track the progress of planning.
+  - Once approved, the finalized lecture plan can be exported in `.ics` format for integration into personal calendars or in `.xlsx` format.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Admin Hub**:
+  - Admins have special access to add upcoming events/holidays in the "Events and Holidays" section and new courses in the "Courses and Modules" section, which will be visible and accessible in the application.
+  - Admins can also approve or reject newly registered users in the "User Registrations" section.
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

@@ -244,7 +244,7 @@ const swaggerOptions = {
       },
     },
   },
-  apis: ['./api/*.js'],  // Paths to API route files
+  apis: ['./api/*.js'], 
 };
 
 module.exports = swaggerJsDoc(swaggerOptions);

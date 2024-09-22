@@ -20,7 +20,7 @@ export const AddEventsForm = ({ onRequestClose, initialData, onFormSubmit }) => 
   }, [initialData]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();  // Prevent default form submission behavior
+    e.preventDefault(); 
 
     setError('');
 
@@ -33,7 +33,7 @@ export const AddEventsForm = ({ onRequestClose, initialData, onFormSubmit }) => 
         }
       );
       if (onFormSubmit) {
-        onFormSubmit(eventData);  // Call the callback to trigger refresh
+        onFormSubmit(eventData);  
       }
       setEventData({
         startDate: '',
@@ -50,7 +50,6 @@ export const AddEventsForm = ({ onRequestClose, initialData, onFormSubmit }) => 
     } catch (error) {
       console.error('Error:', error); 
 
-      // Check if error.response is defined
       if (error.response) {
         console.error('Error Response:', error.response);
         setError(error.response.data?.message || 'An error occurred while submitting the form.');

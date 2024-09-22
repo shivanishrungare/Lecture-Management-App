@@ -6,7 +6,7 @@ import { LecturePlanContent } from './LecturePlanContent';
 
 export const LectureGrid = ({ moduleId }) => {
   const [lecturePlans, setLecturePlans] = useState([]);
-  const [weeks, setWeeks] = useState(['Week 1', 'Week 2', 'Week 3', 'Week 4']); // Start with 4 default weeks
+  const [weeks, setWeeks] = useState(['Week 1', 'Week 2', 'Week 3', 'Week 4']); 
 
   useEffect(() => {
     const fetchLecturePlans = async () => {
@@ -14,16 +14,16 @@ export const LectureGrid = ({ moduleId }) => {
         const data = await fetchLecturePlansByModuleId(moduleId);
         setLecturePlans(data);
 
-        // Extract weeks from fetched lecture plans
+
         const fetchedWeeks = Array.from(new Set(data.map(lp => `Week ${lp.lectureWeek}`)));
 
-        // Determine the maximum week number from the fetched lecture plans
+      
         const maxFetchedWeek = Math.max(
           ...fetchedWeeks.map(week => parseInt(week.replace('Week ', ''))),
-          4 // Ensure we at least start with Week 4
+          4 
         );
 
-        // Add weeks sequentially if there are weeks beyond the default four
+
         const additionalWeeks = [];
         for (let i = 5; i <= maxFetchedWeek; i++) {
           additionalWeeks.push(`Week ${i}`);

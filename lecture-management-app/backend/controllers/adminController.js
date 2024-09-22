@@ -2,64 +2,7 @@ const Course= require('../models/courseSchema');
 const Event= require('../models/eventSchema');
 const { format, isValid } = require('date-fns');
 
-/**
- * @swagger
- * components:
- *   schemas:
- *     Course:
- *       type: object
- *       required:
- *         - studyProgram
- *         - moduleName
- *         - creditPoints
- *         - language
- *         - moduleDetails
- *       properties:
- *         id:
- *           type: string
- *           description: The auto-generated ID of the course
- *         studyProgram:
- *           type: string
- *           description: The study program of the course
- *         moduleName:
- *           type: string
- *           description: The module name
- *         creditPoints:
- *           type: number
- *           description: The credit points for the course
- *         language:
- *           type: string
- *           description: The language of instruction
- *         moduleDetails:
- *           type: string
- *           description: Detailed information about the module
- *       example:
- *         id: d5fE_asz
- *         studyProgram: Computer Science
- *         moduleName: Advanced Algorithms
- *         creditPoints: 6
- *         language: English
- *         moduleDetails: In-depth study of advanced algorithms and their applications
- */
 
-/**
- * @swagger
- * /courses:
- *   get:
- *     summary: Returns the list of all courses
- *     tags: [Courses]
- *     responses:
- *       200:
- *         description: The list of courses
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Course'
- */
-
-  
 exports.getAllCourses = async (req, res) => {
     try {
         const course = await Course.find();
@@ -69,31 +12,6 @@ exports.getAllCourses = async (req, res) => {
     }
 }
 
-/**
- * @swagger
- * /courses/{id}:
- *   get:
- *     summary: Get a course by ID
- *     tags: [Courses]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: The course ID
- *     responses:
- *       200:
- *         description: The course description by ID
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Course'
- *       404:
- *         description: The course was not found
- *       500:
- *         description: Some error happened
- */
 exports.getCourseById = async (req, res) => {
     try {
         const { id } = req.params;

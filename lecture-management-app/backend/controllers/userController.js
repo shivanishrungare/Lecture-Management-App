@@ -230,7 +230,7 @@ exports.approveUserStatus = async (req, res) => {
     }
   };
 
-  // Revert user to pending
+
   exports.revertUser = async (req, res) => {
     try {
       const { id } = req.params;

@@ -20,7 +20,6 @@ export const UserRegTable = () => {
     setActiveTable(component);
   };
 
-  // Approve selected users
   const approveUser = async (ids) => {
     try {
       await Promise.all(
@@ -28,13 +27,13 @@ export const UserRegTable = () => {
           await axios.put(`${process.env.REACT_APP_API_URL}/api/users/approve/${id}`, { status: 'approved' });
         })
       );
-      window.location.reload(); // Reload the page to reflect changes
+      window.location.reload(); 
     } catch (error) {
       console.error('Error approving users:', error);
     }
   };
 
-  // Reject selected users
+
   const rejectUser = async (ids) => {
     try {
       await Promise.all(
@@ -42,13 +41,12 @@ export const UserRegTable = () => {
           await axios.put(`${process.env.REACT_APP_API_URL}/api/users/reject/${id}`, { status: 'rejected' });
         })
       );
-      window.location.reload(); // Reload the page to reflect changes
+      window.location.reload(); 
     } catch (error) {
       console.error('Error rejecting users:', error);
     }
   };
 
-  // Revert selected users to pending
   const revertUser = async (ids) => {
     try {
       await Promise.all(
@@ -56,13 +54,13 @@ export const UserRegTable = () => {
           await axios.put(`${process.env.REACT_APP_API_URL}/api/users/revert/${id}`, { status: 'pending' });
         })
       );
-      window.location.reload(); // Reload the page to reflect changes
+      window.location.reload(); 
     } catch (error) {
       console.error('Error reverting users to pending:', error);
     }
   };
 
-  // Delete selected users (for Rejected table only)
+
   const deleteUser = async (ids) => {
     try {
       await Promise.all(
@@ -70,7 +68,7 @@ export const UserRegTable = () => {
           await axios.delete(`${process.env.REACT_APP_API_URL}/api/users/id/${id}`);
         })
       );
-      window.location.reload(); // Reload the page to reflect changes
+      window.location.reload();
     } catch (error) {
       console.error('Error deleting users:', error);
     }

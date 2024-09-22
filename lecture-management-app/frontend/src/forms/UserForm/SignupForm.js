@@ -10,7 +10,7 @@ import { SignUpSuccess } from '../../components/Dialogs/ModalPopUp/SignUpSuccess
 export const SignupForm = ({ onRequestClose, switchToLogin }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalType, setModalType] = useState('');
-  const [errorMsg, setErrorMsg] = useState(''); // Consolidate all errors here
+  const [errorMsg, setErrorMsg] = useState('');
 
   const openModal = (type) => {
     setModalType(type);
@@ -50,9 +50,9 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg(''); // Clear error message on new submit attempt
+    setErrorMsg(''); 
 
-    // Basic validation checks
+  
     if (userData.password !== userData.passwordConfirm) {
       setErrorMsg('Passwords do not match.');
       return;
@@ -81,7 +81,6 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
       localStorage.setItem('token', token);
       openModal('SignUpSuccess');
 
-      // Clear form fields on success
       setUserData({
         firstName: '',
         lastName: '',
@@ -93,7 +92,6 @@ export const SignupForm = ({ onRequestClose, switchToLogin }) => {
         passwordConfirm: '',
       });
     } catch (err) {
-      // Catch and display error from server or generic message
       setErrorMsg(err.response?.data?.error || 'An error occurred during registration.');
     }
   };

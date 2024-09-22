@@ -20,21 +20,21 @@ export const AdminSideMenu = ({ onMenuClick }) => {
         <p className='font-face page-title'>Admin Hub</p>
         <div className='side-menu-links'>
           <Link
-            to="/admin/events" // Correct route
+            to="/admin/events"
             onClick={() => handleLinkClick('Events and Holidays')}
             className={`font-face admin-link-events ${activeLink === 'Events and Holidays' ? 'active' : ''}`}
           >
             Events and Holidays
           </Link>
           <Link
-            to="/admin/courses" // Correct route
+            to="/admin/courses"
             onClick={() => handleLinkClick('Courses and Modules')}
             className={`font-face admin-link-courses ${activeLink === 'Courses and Modules' ? 'active' : ''}`}
           >
             Courses and Modules
           </Link>
           <Link
-            to="/admin/registrations" // Correct route
+            to="/admin/registrations" 
             onClick={() => handleLinkClick('User Registrations')}
             className={`font-face admin-link-users ${activeLink === 'User Registrations' ? 'active' : ''}`}
           >

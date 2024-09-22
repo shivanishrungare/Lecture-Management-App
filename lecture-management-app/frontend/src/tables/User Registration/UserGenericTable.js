@@ -98,12 +98,12 @@ export const UserGenericTable = ({ columns, fetchData, title, activeTable, onApp
         <EnhancedTableToolbar
           numSelected={selected.length}
           title={title}
-          selectedIds={selected}  // Pass selected IDs
-          onApprove={onApprove}  // Approve handler
+          selectedIds={selected} 
+          onApprove={onApprove}  
           onReject={onReject} 
-          onRevert={onRevert} // Reject handler
-          onDelete={onDelete}  // Delete handler
-          activeTable={activeTable}  // To control Delete button visibility
+          onRevert={onRevert}
+          onDelete={onDelete} 
+          activeTable={activeTable}  
         />
         <TableContainer>
           <Table

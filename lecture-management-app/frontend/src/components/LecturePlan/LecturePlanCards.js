@@ -24,18 +24,18 @@ export const LecturePlanCards = ({ lecture, week, onDelete }) => {
       case 'Week 8':
         return '#2007FF';
       default:
-        return '#DF4807'; // Default color
+        return '#DF4807'; 
     }
   };
 
-  // Format the lecture date
+
   const formattedDate = format(new Date(lecture.lectureDate), 'MMMM do, yyyy');
 
-  // Extract professor names
+
   const professorNames = lecture.professors.map(professor => professor.name).join(', ');
 
   const handleDelete = () => {
-    // Trigger the delete action passed down by the parent component
+
     onDelete(lecture.id);
   };
 

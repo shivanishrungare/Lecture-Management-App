@@ -26,7 +26,7 @@ const MenuProps = {
   },
 };
 
-// Debouncing function to delay validation
+
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
@@ -110,7 +110,6 @@ export const LecturePlanForm = ({ onRequestClose }) => {
     fetchEventsAndHolidays();
   }, [moduleId]);
 
-  // Debounced validation logic
   const validateDate = debounce((selectedDate) => {
     if (moduleStartDate && moduleEndDate) {
       if (selectedDate < moduleStartDate || selectedDate > moduleEndDate) {
@@ -138,7 +137,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
         setWarningOpen(true);
       }
     }
-  }, 500); // Delay of 500ms for debouncing
+  }, 500);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -149,7 +148,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
       if (name === 'lectureDate') {
         const selectedDate = new Date(value);
 
-        validateDate(selectedDate); // Call debounced validation
+        validateDate(selectedDate); 
 
         const daysDifference = Math.floor((selectedDate - moduleStartDate) / (1000 * 60 * 60 * 24));
         const lectureWeek = Math.floor(daysDifference / 7) + 1;
@@ -207,7 +206,7 @@ export const LecturePlanForm = ({ onRequestClose }) => {
         lectureUnits: formData.lectureUnits,
       });
       onRequestClose();
-      window.location.reload(); // Reload after submission
+      window.location.reload();
     } catch (error) {
       setError(error.response?.data?.message || 'An error occurred');
     }

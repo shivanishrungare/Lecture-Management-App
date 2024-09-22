@@ -41,7 +41,7 @@ const eventSchema = new mongoose.Schema({
     timestamps: true,
 });
 
-// Pre-save middleware to validate startDate, endDate, startTime, endTime
+
 eventSchema.pre('save', function(next) {
     const startDate = new Date(this.startDate);
     const endDate = new Date(this.endDate);
@@ -50,7 +50,7 @@ eventSchema.pre('save', function(next) {
         return next(new Error('End date must be the same as or after the start date.'));
     }
 
-    // Check times only if the dates are the same
+
     if (this.startDate === this.endDate) {
         const startDateTime = new Date(`1970-01-01T${this.startTime}:00Z`);
         const endDateTime = new Date(`1970-01-01T${this.endTime}:00Z`);

@@ -26,15 +26,15 @@ export const GenericTable = ({ columns, fetchData, title, FormComponent, deleteE
   const [rows, setRows] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
 
-  // Fetch rows using the fetchData function passed as a prop
+
   useEffect(() => {
     const fetchRows = async () => {
-      const result = await fetchData();  // Call fetchData prop
-      setRows(result);                   // Set rows with fetched data
+      const result = await fetchData(); 
+      setRows(result);               
     };
 
     fetchRows();
-  }, [fetchData]);  // Run this effect whenever fetchData changes
+  }, [fetchData]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

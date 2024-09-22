@@ -11,7 +11,7 @@ export const LandingPage = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/home'); // Redirect to home if already logged in
+      navigate('/home'); 
     }
   }, [isLoggedIn, navigate]);
 

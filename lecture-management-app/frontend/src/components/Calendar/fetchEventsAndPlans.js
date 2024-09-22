@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const usePlanData = () => {
-  // Fetching approved lecture plans
+
   const fetchApprovedLecturePlans = async (userId) => {
     if (!userId) return [];
 
@@ -24,7 +24,7 @@ export const usePlanData = () => {
     }
   };
 
-  // Fetching admin events
+
   const fetchAdminEvents = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/events`);
