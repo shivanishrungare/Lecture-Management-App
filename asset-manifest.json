@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/static/css/main.30104472.css",
+    "main.js": "/static/js/main.dca2543c.js",
+    "static/media/Inter.ttf": "/static/media/Inter.853e01975d2783d9fa29.ttf",
+    "static/media/image01.png": "/static/media/image01.a1b9e8766c8878fb84d8.png",
+    "static/media/image02.png": "/static/media/image02.bd06ebfc5bf6f0dce659.png",
+    "static/media/logo4.png": "/static/media/logo4.49454acdf2a94ddcd55a.png",
+    "static/media/logoImg.png": "/static/media/logoImg.ed071413a3a89a26e18c.png",
+    "static/media/admin-filled.svg": "/static/media/admin-filled.91327369238df3cdea77.svg",
+    "static/media/adminhub.svg": "/static/media/adminhub.3ee7a91c47b0c1c8fe44.svg",
+    "static/media/settings-filled.svg": "/static/media/settings-filled.a2b6b20a54f0cac05f1f.svg",
+    "static/media/settings.svg": "/static/media/settings.6820f0ccdf8cf31ee75a.svg",
+    "static/media/feedback-filled.svg": "/static/media/feedback-filled.1c83197244ad528a1f25.svg",
+    "static/media/feedback.svg": "/static/media/feedback.f1634adfd22ae3972b97.svg",
+    "static/media/notification.svg": "/static/media/notification.67f293fba441afc3459fb45c8811f146.svg",
+    "static/media/status-filled.svg": "/static/media/status-filled.9b7496e21a315b403d95.svg",
+    "static/media/status.svg": "/static/media/status.97c64bb178382904256e.svg",
+    "static/media/home-filled.svg": "/static/media/home-filled.6de41f8e42f360922ff8.svg",
+    "static/media/home.svg": "/static/media/home.f7fbfe932c3a93449eb2.svg",
+    "index.html": "/index.html",
+    "static/media/help-filled.svg": "/static/media/help-filled.1145f0c899c4ef12f86a.svg",
+    "static/media/help.svg": "/static/media/help.0d2951015c9e5a790071.svg",
+    "static/media/success.svg": "/static/media/success.05d0b99ee9f543fa9d41dc4b090fd11a.svg",
+    "static/media/close.svg": "/static/media/close.8b9fdf399d0e5d8b3b7eb7cbf1165e94.svg",
+    "static/media/add.svg": "/static/media/add.c57987245fa0d502d33b778479f61918.svg",
+    "main.30104472.css.map": "/static/css/main.30104472.css.map",
+    "main.dca2543c.js.map": "/static/js/main.dca2543c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.30104472.css",
+    "static/js/main.dca2543c.js"
+  ]
+}
